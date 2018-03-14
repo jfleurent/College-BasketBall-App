@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CollegeBasketballApp.iml" filepath="$PROJECT_DIR$/CollegeBasketballApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/College-BasketBall-App.iml" filepath="$PROJECT_DIR$/College-BasketBall-App.iml" />
+      <module fileurl="file://C:\Users\jeffr\College-BasketBall-App\CollegeBasketballApp.iml" filepath="C:\Users\jeffr\College-BasketBall-App\CollegeBasketballApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
