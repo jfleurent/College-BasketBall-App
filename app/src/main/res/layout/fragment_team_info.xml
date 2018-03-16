@@ -14,12 +14,19 @@
             android:text="Eagles"
             android:textAlignment="center"
             android:textSize="32sp" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <com.github.mikephil.charting.charts.PieChart
+        android:layout_centerHorizontal="true"
         android:id="@+id/team_wins_piechart"
-        android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_width="250dp"
+        android:layout_height="250dp">
     </com.github.mikephil.charting.charts.PieChart>
+
+</RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/team_players_recyclerview"

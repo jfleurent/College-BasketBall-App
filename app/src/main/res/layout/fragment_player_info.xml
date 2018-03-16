@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        >
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/player_play_time_piechart"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center">
+        </com.github.mikephil.charting.charts.PieChart>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Player Info"
+                    android:textSize="50sp"/>
+                <view
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/holo_orange_light">
+                </view>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:text="Jersey"
+                    />
+                <TextView
+                    android:id="@+id/player_number_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="40sp"
+                    android:text="07"
+                    />
+                <TextView
+                    android:id="@+id/player_name_textview"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name: Andrew Jackson"/>
+                <TextView
+                    android:id="@+id/player_DOB_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Date of Birth: 08/12/1992"
+                    />
+                <TextView
+                    android:id="@+id/player_birth_place_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Birth Place: Florida"
+                    />
+                <TextView
+                    android:id="@+id/player_postion_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Position: Defence"
+                    />
+                <TextView
+                    android:id="@+id/player_weight_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Weight: 200 lbs"
+                    />
+                <TextView
+                    android:id="@+id/player_hieght_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Hieght: 78 in"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_orange_light">
+        </view>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Assists"/>
+                <TextView
+                    android:id="@+id/total_assists_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_assists_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Per Game: 100"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_orange_light">
+        </view>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blocks"/>
+                <TextView
+                    android:id="@+id/total_blocks_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Attempts: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_blocks_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attemps Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/shot_blocks_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blocked Shots: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_shot_blocks_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blocked Shots Per Game: 100"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_orange_light">
+        </view>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rebounds"/>
+                <TextView
+                    android:id="@+id/total_rebounds_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Attempts: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_rebounds_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attemps Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/defencive_rebounds_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Defensive Rebounds: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_defensive_rebounds_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Defensive Rebounds Per Game: 100"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_orange_light">
+        </view>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Turnovers"/>
+                <TextView
+                    android:id="@+id/total_turnovers_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Attempts: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_turnover_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attemps Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/turnover_assists_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Turnover to Assist Ratio: 100"
+                    />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_orange_light">
+        </view>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Free Throws"/>
+                <TextView
+                    android:id="@+id/total_free_throws_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_free_throws_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/free_throw_attempts_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Attempts: 100"
+                    />
+                <TextView
+                    android:id="@+id/free_throw_attempts_per_game_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attempts Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/free_throw_percentage_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Percentage: 20%"/>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_orange_light">
+        </view>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Two Pointers"/>
+                <TextView
+                    android:id="@+id/total_two_pointers_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Attempts: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_two_pointer_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attemps Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/made_two_pointer_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sucessful Two Pointers: 100"
+                    />
+                <TextView
+                    android:id="@+id/made_per_game_two_pointer_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sucessful Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/percentage_two_pointer_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Percentage: 10%"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_orange_light">
+        </view>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Three Pointers"/>
+                <TextView
+                    android:id="@+id/total_three_pointers_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Attempts: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_three_pointer_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attemps Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/made_three_pointer_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sucessful Three Pointers: 100"
+                    />
+                <TextView
+                    android:id="@+id/made_per_game_three_pointer_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sucessful Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/percentage_three_pointer_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Percentage: 10%"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <view
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/holo_orange_light">
+        </view>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="True Shot"/>
+                <TextView
+                    android:id="@+id/total_true_shot_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Attempts: 100"
+                    />
+                <TextView
+                    android:id="@+id/per_game_true_shot_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attemps Per Game: 100"
+                    />
+                <TextView
+                    android:id="@+id/percentage_true_shot_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Percentage: 10%"
+                    />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>
