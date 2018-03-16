@@ -17,6 +17,7 @@
                 android:textAlignment="center"
                 android:text="Team"/>
             <TextView
+                android:id="@+id/team_name_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
@@ -35,6 +36,7 @@
                 android:textAlignment="center"
                 android:text="City"/>
             <TextView
+                android:id="@+id/team_city_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fort Myers"
@@ -55,6 +57,7 @@
         />
 
     <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/win_loss_piechart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
