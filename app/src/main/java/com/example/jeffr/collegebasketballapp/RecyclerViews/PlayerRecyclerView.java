@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.jeffr.collegebasketballapp.DataObjects.Player;
 import com.example.jeffr.collegebasketballapp.R;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -48,10 +49,10 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
     public void onBindViewHolder(final PlayerRecyclerViewHolder holder, int position) {
         float[] playTime = {playerList.get(position).getTimePlayed(),playerList.get(position).getTimeNotPlayed()};
         String[] pieChartItems = {"Time Played","Time Not Played"};
-        holder.playerPosition.setText(playerList.get(position).getPosition());
+        holder.playerPosition.setText("Position: "+playerList.get(position).getPosition());
         holder.playerNumber.setText(playerList.get(position).getNumber());
-        holder.playerLastName.setText(playerList.get(position).getLastName());
-        holder.playerFirstName.setText(playerList.get(position).getFirstName());
+        holder.playerLastName.setText("Last Name: "+playerList.get(position).getLastName());
+        holder.playerFirstName.setText("First Name: "+playerList.get(position).getFirstName());
         addDataSet(playTime,pieChartItems,holder.playTimeChart);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -80,15 +81,15 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
             xEntrys.add(xData[i]);
         }
 
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
-        pieDataSet.setSliceSpace(2);
-        pieDataSet.setValueTextSize(12);
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Play Time");
+        pieDataSet.setValueTextSize(0);
+
 
         ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.GREEN);
+        colors.add(Color.RED);
         colors.add(Color.GRAY);
         colors.add(Color.BLUE);
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
         colors.add(Color.CYAN);
         colors.add(Color.YELLOW);
         colors.add(Color.MAGENTA);
@@ -97,11 +98,19 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
 
         Legend legend = pieChart.getLegend();
         legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+
+        Description description = pieChart.getDescription();
+        description.setText("");
+
+
+
 
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
+        pieChart.setTouchEnabled(false);
 
     }
 

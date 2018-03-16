@@ -1,8 +1,13 @@
 package com.example.jeffr.collegebasketballapp;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -17,6 +22,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import com.example.jeffr.collegebasketballapp.DataObjects.Player;
+import com.example.jeffr.collegebasketballapp.DataObjects.Team;
+import com.example.jeffr.collegebasketballapp.RecyclerViews.RecyclerViewOnClick;
+import com.example.jeffr.collegebasketballapp.RecyclerViews.TeamRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasketbballLeagueHomeActivity extends AppCompatActivity {
 
@@ -51,11 +64,7 @@ public class BasketbballLeagueHomeActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,19 +84,21 @@ public class BasketbballLeagueHomeActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements RecyclerViewOnClick {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private TextView gender;
+        private List<Team> teamList = new ArrayList<>();
+        private TeamRecyclerView teamRecyclerView;
 
         public PlaceholderFragment() {
         }
@@ -108,7 +119,41 @@ public class BasketbballLeagueHomeActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_basketbball_league_home, container, false);
+            gender = rootView.findViewById(R.id.gender);
+            final FragmentActivity fragmentActivity = getActivity();
+
+            //For genders teams data
+            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1 ){
+                gender.setText("Male");
+            }
+            else{
+                gender.setText("Female");
+            }
+
+            List<Player> teamPlayers = new ArrayList<>();
+            teamPlayers.add(new Player(11,2,"John","Johnson","defence","11"));
+            teamPlayers.add(new Player(11,2,"John","Johnson","defence","11"));
+            teamPlayers.add(new Player(11,2,"John","Johnson","defence","11"));
+
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity);
+            teamRecyclerView = new TeamRecyclerView(teamList,this);
+            RecyclerView r = rootView.findViewById(R.id.teams_recyclerview);
+            r.setLayoutManager(linearLayoutManager);
+            r.setAdapter(teamRecyclerView);
+            r.setItemAnimator(new DefaultItemAnimator());
+
             return rootView;
+        }
+
+        @Override
+        public void rowSelected(int row) {
+            TeamProfileActivity.team = teamList.get(row);
+            Intent intent = new Intent(getActivity(),TeamProfileActivity.class);
+            startActivity(intent);
         }
     }
 

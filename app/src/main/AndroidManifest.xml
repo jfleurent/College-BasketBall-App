@@ -19,6 +19,9 @@
         <activity
             android:name=".BasketbballLeagueHomeActivity"
             android:label="@string/title_activity_basketbball_league_home"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TeamProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

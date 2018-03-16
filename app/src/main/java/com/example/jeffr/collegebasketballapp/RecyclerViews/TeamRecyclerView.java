@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.jeffr.collegebasketballapp.DataObjects.Team;
 import com.example.jeffr.collegebasketballapp.R;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -35,7 +36,7 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
     @Override
     public TeamRecyclerView.TeamRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        int layoutIdForListItem = R.layout.player_info_item;
+        int layoutIdForListItem = R.layout.team_info_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
 
@@ -77,15 +78,15 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
             xEntrys.add(xData[i]);
         }
 
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
-        pieDataSet.setSliceSpace(2);
-        pieDataSet.setValueTextSize(12);
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Win/Loss");
+        pieDataSet.setValueTextSize(0);
+
 
         ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.GREEN);
+        colors.add(Color.RED);
         colors.add(Color.GRAY);
         colors.add(Color.BLUE);
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
         colors.add(Color.CYAN);
         colors.add(Color.YELLOW);
         colors.add(Color.MAGENTA);
@@ -94,11 +95,19 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
 
         Legend legend = pieChart.getLegend();
         legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+
+        Description description = pieChart.getDescription();
+        description.setText("");
+
+
+
 
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
+        pieChart.setTouchEnabled(false);
 
     }
 

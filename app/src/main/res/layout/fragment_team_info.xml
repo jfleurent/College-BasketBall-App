@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.jeffr.collegebasketballapp.TeamProfileActivity$TeamInfoFragment"
+    >
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/team_name_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eagles"
+            android:textAlignment="center"
+            android:textSize="32sp" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/team_wins_piechart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+    </com.github.mikephil.charting.charts.PieChart>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/team_players_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
