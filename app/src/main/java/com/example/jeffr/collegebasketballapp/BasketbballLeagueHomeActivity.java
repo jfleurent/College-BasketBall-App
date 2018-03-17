@@ -3,6 +3,7 @@ package com.example.jeffr.collegebasketballapp;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -53,9 +54,10 @@ public class BasketbballLeagueHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basketbball_league_home);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -64,6 +66,16 @@ public class BasketbballLeagueHomeActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     @Override
@@ -119,22 +131,78 @@ public class BasketbballLeagueHomeActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_basketbball_league_home, container, false);
-            gender = rootView.findViewById(R.id.gender);
             final FragmentActivity fragmentActivity = getActivity();
 
             //For genders teams data
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1 ){
-                gender.setText("Male");
+
             }
             else{
-                gender.setText("Female");
+
             }
 
             List<Player> teamPlayers = new ArrayList<>();
-            teamPlayers.add(new Player(11,2,"John","Johnson","defence","11"));
-            teamPlayers.add(new Player(11,2,"John","Johnson","defence","11"));
-            teamPlayers.add(new Player(11,2,"John","Johnson","defence","11"));
+            teamPlayers.add(new Player(11,2,"John","Johnson",
+                    "defence","11","02/14/1198","Michigan","67 in",
+                    "220 lbs","41","6","32","30",
+                    "6","73","4","34",
+                    "2","34","65","43",
+                    "65","64","34","54","23",
+                    "43","24","234","34",
+                    "34","43","32","45","23",
+                    "43","53","53","65","23"));
+            teamPlayers.add(new Player(11,2,"John","Johnson",
+                    "defence","11","02/14/1198","Michigan","67 in",
+                    "220 lbs","41","6","32","30",
+                    "6","73","4","34",
+                    "2","34","65","43",
+                    "65","64","34","54","23",
+                    "43","24","234","34",
+                    "34","43","32","45","23",
+                    "43","53","53","65","23"));
+            teamPlayers.add(new Player(11,2,"John","Johnson",
+                    "defence","11","02/14/1198","Michigan","67 in",
+                    "220 lbs","41","6","32","30",
+                    "6","73","4","34",
+                    "2","34","65","43",
+                    "65","64","34","54","23",
+                    "43","24","234","34",
+                    "34","43","32","45","23",
+                    "43","53","53","65","23"));
+            teamPlayers.add(new Player(11,2,"John","Johnson",
+                    "defence","11","02/14/1198","Michigan","67 in",
+                    "220 lbs","41","6","32","30",
+                    "6","73","4","34",
+                    "2","34","65","43",
+                    "65","64","34","54","23",
+                    "43","24","234","34",
+                    "34","43","32","45","23",
+                    "43","53","53","65","23"));
+            teamPlayers.add(new Player(11,2,"John","Johnson",
+                    "defence","11","02/14/1198","Michigan","67 in",
+                    "220 lbs","41","6","32","30",
+                    "6","73","4","34",
+                    "2","34","65","43",
+                    "65","64","34","54","23",
+                    "43","24","234","34",
+                    "34","43","32","45","23",
+                    "43","53","53","65","23"));
+            teamPlayers.add(new Player(11,2,"John","Johnson",
+                    "defence","11","02/14/1198","Michigan","67 in",
+                    "220 lbs","41","6","32","30",
+                    "6","73","4","34",
+                    "2","34","65","43",
+                    "65","64","34","54","23",
+                    "43","24","234","34",
+                    "34","43","32","45","23",
+                    "43","53","53","65","23"));
 
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
+            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
             teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
             teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
             teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));

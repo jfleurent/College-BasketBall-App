@@ -25,7 +25,7 @@
             android:name=".TeamProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PlayerProfileActivity"
-             ></activity>
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
     </application>
 
 </manifest>

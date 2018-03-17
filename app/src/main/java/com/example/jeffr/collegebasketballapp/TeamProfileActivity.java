@@ -1,5 +1,6 @@
 package com.example.jeffr.collegebasketballapp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -46,9 +47,16 @@ public class TeamProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.container);
         viewPager.setAdapter(pagerAdapter);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     public static class TeamInfoFragment extends Fragment implements RecyclerViewOnClick{
@@ -92,7 +100,9 @@ public class TeamProfileActivity extends AppCompatActivity {
 
         @Override
         public void rowSelected(int row) {
-
+            PlayerProfileActivity.player = team.getTeamPlayers().get(row);
+            Intent intent = new Intent(getActivity(),PlayerProfileActivity.class);
+            startActivity(intent);
         }
 
         private void addDataSet(float[] yData, String[] xData, PieChart pieChart) {
@@ -143,7 +153,7 @@ public class TeamProfileActivity extends AppCompatActivity {
     }
 
 
-    public class PagerAdapter extends FragmentPagerAdapter {
+    private class PagerAdapter extends FragmentPagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);

@@ -23,7 +23,7 @@ public class Player {
     private String sucessfulBlocks;
     private String sucessfulBlocksPerGame;
     private String defensiveRebounds;
-    private String DefensiveReboundsPerGame;
+    private String defensiveReboundsPerGame;
     private String freeThrowsAttempts;
     private String freeThrowsAttemptsPerGame;
     private String freeThrowPercentage;
@@ -48,13 +48,61 @@ public class Player {
     private String sucessfulTwoPointPerGame;
 
 
-    public Player(float timePlayed, float timeNotPlayed, String firstName, String lastName, String position, String number){
+
+    public Player(float timePlayed, float timeNotPlayed, String firstName, String lastName,
+                  String position, String number,String birthDate,String birthPlace,
+                  String height,String weight,String totalAssists,String assistsPerGame,
+                  String turnoverToAssist, String blockAttempts,String blockAttemptsPerGame,
+                  String sucessfulBlocks, String sucessfulBlocksPerGame, String defensiveRebounds,
+                  String defensiveReboundsPerGame, String freeThrowsAttempts,
+                  String freeThrowsAttemptsPerGame,String freeThrowPercentage, String sucessfulfreeThrow,
+                  String sucessfulFreeThrowPerGame,String totalRebounds, String reboundsPerGame,
+                  String threePointAttempts, String threePointAttemptsPerGame,String threePointPercentage,
+                  String sucessfulThreePoint,String sucessfulThreePointPerGame, String trueShotAttempts,
+                  String trueShotAttemptsPerGame, String trueShotPercentage,String turnovers,
+                  String turnoverPerGame, String twoPointAttempts, String twoPointAttemptsPercentage,
+                  String twoPointAttemptsPerGame, String sucessfulTwoPoint, String sucessfulTwoPointPerGame){
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
         this.number = number;
         this.timeNotPlayed = timeNotPlayed;
         this.timePlayed = timePlayed;
+        this.birthDate = birthDate;
+        this.birthPlace = birthPlace;
+        this.height = height;
+        this.weight = weight;
+        this.totalAssists = totalAssists;
+        this.assistsPerGame = assistsPerGame;
+        this.turnoverToAssist = turnoverToAssist;
+        this.blockAttempts = blockAttempts;
+        this.blockAttemptsPerGame = blockAttemptsPerGame;
+        this.sucessfulBlocks = sucessfulBlocks;
+        this.sucessfulBlocksPerGame = sucessfulBlocksPerGame;
+        this.defensiveRebounds = defensiveRebounds;
+        this.defensiveReboundsPerGame = defensiveReboundsPerGame;
+        this.freeThrowsAttempts = freeThrowsAttempts;
+        this.defensiveReboundsPerGame = freeThrowsAttemptsPerGame;
+        this.freeThrowPercentage = freeThrowPercentage;
+        this.sucessfulfreeThrow = sucessfulfreeThrow;
+        this.sucessfulFreeThrowPerGame = sucessfulFreeThrowPerGame;
+        this.totalRebounds = totalRebounds;
+        this.reboundsPerGame = reboundsPerGame;
+        this.threePointAttempts = threePointAttempts;
+        this.threePointAttemptsPerGame = threePointAttemptsPerGame;
+        this.threePointPercentage = threePointPercentage;
+        this.sucessfulThreePoint = sucessfulThreePoint;
+        this.sucessfulThreePointPerGame = sucessfulThreePointPerGame;
+        this.trueShotAttempts = trueShotAttempts;
+        this.trueShotAttemptsPerGame = trueShotAttemptsPerGame;
+        this.trueShotPercentage = trueShotPercentage;
+        this.turnovers =  turnovers;
+        this.turnoverPerGame = turnoverPerGame;
+        this.twoPointAttempts = twoPointAttempts;
+        this.twoPointAttemptsPercentage = twoPointAttemptsPercentage;
+        this.twoPointAttemptsPerGame = twoPointAttemptsPerGame;
+        this.sucessfulTwoPoint = sucessfulTwoPoint;
+        this.sucessfulTwoPointPerGame = sucessfulTwoPointPerGame;
     }
 
     public float getTimePlayed() {
@@ -361,11 +409,11 @@ public class Player {
 
     public String getDefensiveReboundsPerGame() {
 
-        return DefensiveReboundsPerGame;
+        return defensiveReboundsPerGame;
     }
 
     public void setDefensiveReboundsPerGame(String defensiveReboundsPerGame) {
-        DefensiveReboundsPerGame = defensiveReboundsPerGame;
+        defensiveReboundsPerGame = defensiveReboundsPerGame;
     }
 
     public String getDefensiveRebounds() {
