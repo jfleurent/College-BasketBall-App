@@ -65,6 +65,7 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp(){
+        PlaceholderFragment.getFragments().clear();
         finish();
         return true;
     }

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import java.util.List;
 
 public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick {
 
+    private static final String TAG = PlaceholderFragment.class.getSimpleName();
     private RecyclerView r;
     private  List<List<Team>> teamList = new ArrayList<>();
     private static List<PlaceholderFragment> fragments = new ArrayList<>();
@@ -41,7 +43,6 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
     public PlaceholderFragment() {
     }
 
-
     public static PlaceholderFragment newInstance(int sectionNumber) {
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
@@ -49,6 +50,10 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
         fragment.setArguments(args);
         fragments.add(fragment);
         return fragment;
+    }
+
+    public static List<PlaceholderFragment> getFragments() {
+        return fragments;
     }
 
     @Override
@@ -147,7 +152,17 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
 
     @Override
     public void rowSelected(int row) {
-        TeamProfileActivity.team = teamList.get(getArguments().getInt(ARG_SECTION_NUMBER)).get(row);
+        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1 ){
+            TeamProfileActivity.team = teamList.get(0).get(row);
+            Log.d(TAG, "Went to row" + getArguments().getInt(ARG_SECTION_NUMBER));
+
+        }
+        else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2 ){
+            TeamProfileActivity.team = teamList.get(1).get(row);
+            Log.d(TAG, "Went to row" + getArguments().getInt(ARG_SECTION_NUMBER));
+
+        }
+
         Intent intent = new Intent(getActivity(),TeamProfileActivity.class);
         startActivity(intent);
     }
@@ -213,16 +228,9 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
         public int getCount() {
             return 2;
         }
-
-
     }
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        fragments.clear();
-    }
 }
 
 

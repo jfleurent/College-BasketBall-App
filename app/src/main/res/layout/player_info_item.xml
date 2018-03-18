@@ -65,13 +65,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/play_time_piechart"
-            android:layout_weight="2"
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:textAlignment="center"
+           android:text="Experience"/>
+        <TextView
+            android:id="@+id/player_experience_textview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.github.mikephil.charting.charts.PieChart>
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="FR"
+            android:textSize="60dp"/>
 
     </LinearLayout>
 

@@ -53,7 +53,7 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
         holder.playerNumber.setText(playerList.get(position).getNumber());
         holder.playerLastName.setText("Last Name: "+playerList.get(position).getLastName());
         holder.playerFirstName.setText("First Name: "+playerList.get(position).getFirstName());
-        addDataSet(playTime,pieChartItems,holder.playTimeChart);
+        holder.playerExperience.setText("FR");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,59 +68,13 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
         return playerList.size();
     }
 
-
-    private void addDataSet(float[] yData, String[] xData, PieChart pieChart) {
-        ArrayList<PieEntry> yEntrys = new ArrayList<>();
-        ArrayList<String> xEntrys = new ArrayList<>();
-
-        for(int i = 0; i < yData.length; i++){
-            yEntrys.add(new PieEntry(yData[i] , i));
-        }
-
-        for(int i = 1; i < xData.length; i++){
-            xEntrys.add(xData[i]);
-        }
-
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Play Time");
-        pieDataSet.setValueTextSize(0);
-
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GREEN);
-        colors.add(Color.RED);
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
-        colors.add(Color.CYAN);
-        colors.add(Color.YELLOW);
-        colors.add(Color.MAGENTA);
-
-        pieDataSet.setColors(colors);
-
-        Legend legend = pieChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-
-        Description description = pieChart.getDescription();
-        description.setText("");
-
-
-
-
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
-        pieChart.setTouchEnabled(false);
-
-    }
-
     public class PlayerRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         TextView playerNumber;
         TextView playerPosition;
         TextView playerFirstName;
         TextView playerLastName;
-        PieChart playTimeChart;
+        TextView playerExperience;
 
         public PlayerRecyclerViewHolder(View view) {
             super(view);
@@ -128,10 +82,7 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
             playerLastName = view.findViewById(R.id.last_name_textview);
             playerNumber = view.findViewById(R.id.player_nunber_textview);
             playerPosition = view.findViewById(R.id.player_position_textview);
-            playTimeChart = view.findViewById(R.id.play_time_piechart);
-
-
-
+            playerExperience = view.findViewById(R.id.player_experience_textview);
         }
     }
 }

@@ -46,7 +46,18 @@ public class Player {
     private String twoPointAttemptsPercentage;
     private String sucessfulTwoPoint;
     private String sucessfulTwoPointPerGame;
+    private String experience;
 
+
+    public Player(String firstName, String lastName,
+                  String position, String number, String experience){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+        this.number =number;
+        this.experience = experience;
+
+    }
 
 
     public Player(float timePlayed, float timeNotPlayed, String firstName, String lastName,
@@ -103,6 +114,14 @@ public class Player {
         this.twoPointAttemptsPerGame = twoPointAttemptsPerGame;
         this.sucessfulTwoPoint = sucessfulTwoPoint;
         this.sucessfulTwoPointPerGame = sucessfulTwoPointPerGame;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
 
     public float getTimePlayed() {
