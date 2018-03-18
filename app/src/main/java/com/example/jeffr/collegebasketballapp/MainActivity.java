@@ -1,7 +1,6 @@
 package com.example.jeffr.collegebasketballapp;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, BasketbballLeagueHomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, BasketballLeagueHomeActivity.class);
                 startActivity(intent);
             }
         });

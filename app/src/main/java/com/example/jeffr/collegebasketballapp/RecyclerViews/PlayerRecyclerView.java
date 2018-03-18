@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.jeffr.collegebasketballapp.DataObjects.Player;
 import com.example.jeffr.collegebasketballapp.R;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -48,11 +49,11 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
     public void onBindViewHolder(final PlayerRecyclerViewHolder holder, int position) {
         float[] playTime = {playerList.get(position).getTimePlayed(),playerList.get(position).getTimeNotPlayed()};
         String[] pieChartItems = {"Time Played","Time Not Played"};
-        holder.playerPosition.setText(playerList.get(position).getPosition());
+        holder.playerPosition.setText("Position: "+playerList.get(position).getPosition());
         holder.playerNumber.setText(playerList.get(position).getNumber());
-        holder.playerLastName.setText(playerList.get(position).getLastName());
-        holder.playerFirstName.setText(playerList.get(position).getFirstName());
-        addDataSet(playTime,pieChartItems,holder.playTimeChart);
+        holder.playerLastName.setText("Last Name: "+playerList.get(position).getLastName());
+        holder.playerFirstName.setText("First Name: "+playerList.get(position).getFirstName());
+        holder.playerExperience.setText("FR");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,51 +68,13 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
         return playerList.size();
     }
 
-
-    private void addDataSet(float[] yData, String[] xData, PieChart pieChart) {
-        ArrayList<PieEntry> yEntrys = new ArrayList<>();
-        ArrayList<String> xEntrys = new ArrayList<>();
-
-        for(int i = 0; i < yData.length; i++){
-            yEntrys.add(new PieEntry(yData[i] , i));
-        }
-
-        for(int i = 1; i < xData.length; i++){
-            xEntrys.add(xData[i]);
-        }
-
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
-        pieDataSet.setSliceSpace(2);
-        pieDataSet.setValueTextSize(12);
-
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
-        colors.add(Color.CYAN);
-        colors.add(Color.YELLOW);
-        colors.add(Color.MAGENTA);
-
-        pieDataSet.setColors(colors);
-
-        Legend legend = pieChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
-
-    }
-
     public class PlayerRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         TextView playerNumber;
         TextView playerPosition;
         TextView playerFirstName;
         TextView playerLastName;
-        PieChart playTimeChart;
+        TextView playerExperience;
 
         public PlayerRecyclerViewHolder(View view) {
             super(view);
@@ -119,10 +82,7 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
             playerLastName = view.findViewById(R.id.last_name_textview);
             playerNumber = view.findViewById(R.id.player_nunber_textview);
             playerPosition = view.findViewById(R.id.player_position_textview);
-            playTimeChart = view.findViewById(R.id.play_time_piechart);
-
-
-
+            playerExperience = view.findViewById(R.id.player_experience_textview);
         }
     }
 }
