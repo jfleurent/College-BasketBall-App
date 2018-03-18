@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamProfileActivity extends AppCompatActivity {
-    static Team team;
+    public static Team team;
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
 

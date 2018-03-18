@@ -4,12 +4,19 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jeffr.collegebasketballapp.BasketbballLeagueHomeActivity$PlaceholderFragment">
+    tools:context="com.example.jeffr.collegebasketballapp.BasketballLeagueHomeActivity$PlaceholderFragment">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/teams_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/pb_loading_indicator"
+        android:layout_height="42dp"
+        android:layout_width="42dp"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
 
 </RelativeLayout>
