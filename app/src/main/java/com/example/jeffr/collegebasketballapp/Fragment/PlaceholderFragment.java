@@ -34,9 +34,10 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
 
     private static final String TAG = PlaceholderFragment.class.getSimpleName();
     private RecyclerView r;
-    private  List<List<Team>> teamList = new ArrayList<>();
+    private  static List<List<Team>> teamList = new ArrayList<>();
     private static List<PlaceholderFragment> fragments = new ArrayList<>();
     private  static final String ARG_SECTION_NUMBER = "section_number";
+    public static int rowNumber = 1;
 
     private static TeamRecyclerView teamRecyclerView;
 
@@ -66,80 +67,14 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
 
             new FetchTeamsTask().execute(false);
 
-            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1 && !teamList.isEmpty() ){
+            if(getArguments().getInt(ARG_SECTION_NUMBER)%2 == 1 && !teamList.isEmpty() ){
                 teamRecyclerView = new TeamRecyclerView(teamList.get(0),PlaceholderFragment.this);
                 PlaceholderFragment.newInstance(1).r.setAdapter(teamRecyclerView);
             }
-            else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2 && !teamList.isEmpty()){
+            else if(getArguments().getInt(ARG_SECTION_NUMBER)%2 == 0 && !teamList.isEmpty()){
                 teamRecyclerView = new TeamRecyclerView(teamList.get(1),PlaceholderFragment.this);
                 PlaceholderFragment.newInstance(2).r.setAdapter(teamRecyclerView);
             }
-
-//            List<Player> teamPlayers = new ArrayList<>();
-//            teamPlayers.add(new Player(11,2,"John","Johnson",
-//                    "defence","11","02/14/1198","Michigan","67 in",
-//                    "220 lbs","41","6","32","30",
-//                    "6","73","4","34",
-//                    "2","34","65","43",
-//                    "65","64","34","54","23",
-//                    "43","24","234","34",
-//                    "34","43","32","45","23",
-//                    "43","53","53","65","23"));
-//            teamPlayers.add(new Player(11,2,"John","Johnson",
-//                    "defence","11","02/14/1198","Michigan","67 in",
-//                    "220 lbs","41","6","32","30",
-//                    "6","73","4","34",
-//                    "2","34","65","43",
-//                    "65","64","34","54","23",
-//                    "43","24","234","34",
-//                    "34","43","32","45","23",
-//                    "43","53","53","65","23"));
-//            teamPlayers.add(new Player(11,2,"John","Johnson",
-//                    "defence","11","02/14/1198","Michigan","67 in",
-//                    "220 lbs","41","6","32","30",
-//                    "6","73","4","34",
-//                    "2","34","65","43",
-//                    "65","64","34","54","23",
-//                    "43","24","234","34",
-//                    "34","43","32","45","23",
-//                    "43","53","53","65","23"));
-//            teamPlayers.add(new Player(11,2,"John","Johnson",
-//                    "defence","11","02/14/1198","Michigan","67 in",
-//                    "220 lbs","41","6","32","30",
-//                    "6","73","4","34",
-//                    "2","34","65","43",
-//                    "65","64","34","54","23",
-//                    "43","24","234","34",
-//                    "34","43","32","45","23",
-//                    "43","53","53","65","23"));
-//            teamPlayers.add(new Player(11,2,"John","Johnson",
-//                    "defence","11","02/14/1198","Michigan","67 in",
-//                    "220 lbs","41","6","32","30",
-//                    "6","73","4","34",
-//                    "2","34","65","43",
-//                    "65","64","34","54","23",
-//                    "43","24","234","34",
-//                    "34","43","32","45","23",
-//                    "43","53","53","65","23"));
-//            teamPlayers.add(new Player(11,2,"John","Johnson",
-//                    "defence","11","02/14/1198","Michigan","67 in",
-//                    "220 lbs","41","6","32","30",
-//                    "6","73","4","34",
-//                    "2","34","65","43",
-//                    "65","64","34","54","23",
-//                    "43","24","234","34",
-//                    "34","43","32","45","23",
-//                    "43","53","53","65","23"));
-//
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
-//            teamList.add(new Team(20,12,"Miami","Dolphins",teamPlayers));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity);
 
@@ -152,19 +87,22 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
 
     @Override
     public void rowSelected(int row) {
-        if(getArguments().getInt(ARG_SECTION_NUMBER) == 1 ){
+        if(rowNumber == 1 ){
             TeamProfileActivity.team = teamList.get(0).get(row);
             Log.d(TAG, "Went to row" + getArguments().getInt(ARG_SECTION_NUMBER));
-
+            Intent intent = new Intent(getActivity(),TeamProfileActivity.class);
+            intent.putExtra("Male",true);
+            startActivity(intent);
         }
-        else if(getArguments().getInt(ARG_SECTION_NUMBER) == 2 ){
+        else if(rowNumber == 2 ){
             TeamProfileActivity.team = teamList.get(1).get(row);
             Log.d(TAG, "Went to row" + getArguments().getInt(ARG_SECTION_NUMBER));
-
+            Intent intent = new Intent(getActivity(),TeamProfileActivity.class);
+            intent.putExtra("Male",false);
+            startActivity(intent);
         }
 
-        Intent intent = new Intent(getActivity(),TeamProfileActivity.class);
-        startActivity(intent);
+
     }
 
     public class FetchTeamsTask extends AsyncTask<Boolean, Void, List<List<Team>>> {

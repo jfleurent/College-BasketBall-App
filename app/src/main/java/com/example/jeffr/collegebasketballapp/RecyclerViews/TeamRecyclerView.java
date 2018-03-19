@@ -94,9 +94,8 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
         pieDataSet.setColors(colors);
 
         Legend legend = pieChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        legend.setEnabled(false);
+
 
         Description description = pieChart.getDescription();
         description.setText("");

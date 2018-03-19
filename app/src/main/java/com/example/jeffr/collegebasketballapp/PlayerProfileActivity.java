@@ -1,6 +1,7 @@
 package com.example.jeffr.collegebasketballapp;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,8 +20,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jeffr.collegebasketballapp.DataObjects.Player;
+import com.example.jeffr.collegebasketballapp.DataObjects.Team;
+import com.example.jeffr.collegebasketballapp.Fragment.PlaceholderFragment;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.PlayerRecyclerView;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.RecyclerViewOnClick;
+import com.example.jeffr.collegebasketballapp.RecyclerViews.TeamRecyclerView;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -28,12 +33,15 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerProfileActivity extends AppCompatActivity {
-    static Player player;
+    public static String playerId;
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +65,6 @@ public class PlayerProfileActivity extends AppCompatActivity {
         private PieChart pieChart;
         private TextView jerseyNumber;
         private TextView playerName;
-        private TextView playerDOB;
         private TextView playerBirthPlace;
         private TextView playerHeight;
         private TextView playerWeight;
@@ -101,9 +108,9 @@ public class PlayerProfileActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_player_info, container, false);
 
             pieChart = rootView.findViewById(R.id.player_play_time_piechart);
+            playerName = rootView.findViewById(R.id.player_name_textview);
             jerseyNumber = rootView.findViewById(R.id.player_number_textview);
             playerBirthPlace = rootView.findViewById(R.id.player_birth_place_textview);
-            playerDOB = rootView.findViewById(R.id.player_DOB_textview);
             playerHeight = rootView.findViewById(R.id.player_hieght_textview);
             playerWeight = rootView.findViewById(R.id.player_weight_textview);
             playerPosition = rootView.findViewById(R.id.player_position_textview);
@@ -138,12 +145,9 @@ public class PlayerProfileActivity extends AppCompatActivity {
             trueShotPercentage = rootView.findViewById(R.id.percentage_true_shot_textview);
             trueShotPerGame = rootView.findViewById(R.id.per_game_true_shot_textview);
             totalTrueShot = rootView.findViewById(R.id.total_true_shot_textview);
+            new FetchTeamsTask().execute();
 
 
-            float teamWinRatio[] = {player.getTimePlayed(),player.getTimeNotPlayed()};
-            String[] winText = {"Win","Loss"};
-
-            addDataSet(teamWinRatio,winText,pieChart);
             return rootView;
         }
 
@@ -156,7 +160,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
         }
 
 
-        private void addDataSet(float[] yData, String[] xData, PieChart pieChart) {
+        private void addDataSet(int[] yData, String[] xData, PieChart pieChart) {
             ArrayList<PieEntry> yEntrys = new ArrayList<>();
             ArrayList<String> xEntrys = new ArrayList<>();
 
@@ -175,11 +179,8 @@ public class PlayerProfileActivity extends AppCompatActivity {
             ArrayList<Integer> colors = new ArrayList<>();
             colors.add(Color.GREEN);
             colors.add(Color.RED);
-            colors.add(Color.GRAY);
-            colors.add(Color.BLUE);
-            colors.add(Color.CYAN);
-            colors.add(Color.YELLOW);
-            colors.add(Color.MAGENTA);
+
+
 
             pieDataSet.setColors(colors);
 
@@ -199,7 +200,79 @@ public class PlayerProfileActivity extends AppCompatActivity {
             pieChart.setData(pieData);
             pieChart.invalidate();
             pieChart.setTouchEnabled(false);
+            pieChart.animateY(3000, Easing.EasingOption.EaseInBack);
 
+        }
+        public class FetchTeamsTask extends AsyncTask<Boolean, Void, Player> {
+
+            @Override
+            protected Player doInBackground(Boolean... params) {
+                Player player = null;
+
+                URL playerRequestUrl1 = NetworkUtils.buildPlayerUrl(true,playerId);
+
+                try {
+                    String jsonPlayerResponse = NetworkUtils
+                            .getResponseFromHttpUrl(playerRequestUrl1);
+
+                    player = TeamListJsonUtils
+                            .getPlayerFromJson(getActivity(), jsonPlayerResponse,2017,TeamProfileActivity.team.getId());
+
+
+
+                    return player;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Player playerData) {
+                 int teamWinRatio[] = {playerData.getTimePlayed(),playerData.getTimeNotPlayed()};
+                String[] winText = {"Win","Loss"};
+                addDataSet(teamWinRatio,winText,pieChart);
+                String number = playerData.getNumber().length() == 2 ? playerData.getNumber() : "0"+ playerData.getNumber();
+                jerseyNumber.setText(number);
+                playerName.setText("Name: " +playerData.getFirstName()+" "+ playerData.getLastName());
+                playerBirthPlace.setText("Birth Place: "+ playerData.getBirthPlace());
+                playerHeight.setText("Height: "+playerData.getHeight()+" in");
+                playerWeight.setText("Weight: "+playerData.getWeight()+ " lbs");
+                playerPosition.setText("Position: " +playerData.getPosition());
+                totalAssists.setText("Total: "+ playerData.getTotalAssists());
+                assistsPerGame.setText("Per Game: "+ playerData.getAssistsPerGame());
+                blockAttempts.setText("Total Attempts :" + playerData.getBlockAttempts());
+                blockAttemptsPerGame.setText("Attempts Per Game: "+ playerData.getBlockAttemptsPerGame());
+                blockedShots.setText("Blocked Shots: "+ playerData.getSucessfulBlocks());
+                blockedShotsPerGame.setText("Blocked Shots Per Game: "+ playerData.getSucessfulBlocksPerGame());
+                totalRebounds.setText("Total Attempts: "+ playerData.getTotalRebounds());
+                reboundsPerGame.setText("Attempts Per Game: "+ playerData.getReboundsPerGame());
+                defensiveREbounds.setText("Defeensive Rebounds: "+ playerData.getDefensiveRebounds());
+                defensiveReboundsPerGame.setText("Defensive Rebounds Per Game: "+ playerData.getDefensiveReboundsPerGame());
+                turnoverAttempts.setText("Total Attempts: "+ playerData.getTurnovers());
+                turnoversPerGame.setText("Attempts Per Game: "+ playerData.getTurnoverPerGame());
+                turnoverToAssist.setText("Assists to Turnover Ratio: " + playerData.getTurnoverToAssist());
+                totalFreeThrow.setText("Total: "+ playerData.getFreeThrowsAttempts());
+                freeThrowPerGame.setText("Per Game: "+ playerData.getSucessfulFreeThrowPerGame());
+                successfulFreeThrow.setText("Free Throws Made: "+ playerData.getSucessfulfreeThrow());
+                sucessfulFreeThrowPerGame.setText("Free Throws Made Per Game: " + playerData.getSucessfulFreeThrowPerGame());
+                freeThrowPercentage.setText("Percentage :" + playerData.getFreeThrowPercentage());
+                totalTwoPointer.setText("Total Attempts: "+ playerData.getTwoPointAttempts());
+                twoPointerPerGame.setText("Attempts Per Game: "+ playerData.getTwoPointAttemptsPerGame());
+                sucessfulTwoPointer.setText("Two Pointers Made: "+ playerData.getSucessfulTwoPoint());
+                sucessfulTwoPointerPerGame.setText("Two Pointers Made Per Game: "+ playerData.getSucessfulTwoPointPerGame());
+                twoPointerPercentage.setText("Two Pointer Percentage: "+ playerData.getTwoPointAttemptsPercentage());
+                threePointerPercentage.setText("Three Pointer Percentage: "+ playerData.getThreePointPercentage());
+                threePointerPerGame.setText("Three Pointers Per Game: "+ playerData.getThreePointAttemptsPerGame());
+                sucessfulThreePointer.setText("Three Pointers Made: "+ playerData.getSucessfulThreePoint());
+                sucessfulThreePointerPerGame.setText("Three Pointer Made Per Game: "+ playerData.getSucessfulThreePointPerGame());
+                totalThreePointer.setText("Total Attempts: "+ playerData.getThreePointAttempts());
+                trueShotPercentage.setText("True Shot Percentage: "+ playerData.getTrueShotPercentage());
+                trueShotPerGame.setText("Attempts Per Game: "+ playerData.getTrueShotAttemptsPerGame());
+                totalTrueShot.setText("Total Attempts: "+ playerData.getTrueShotAttempts());
+
+            }
         }
     }
 

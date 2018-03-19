@@ -25,6 +25,7 @@ import com.example.jeffr.collegebasketballapp.RecyclerViews.PlayerRecyclerView;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.RecyclerViewOnClick;
 import com.example.jeffr.collegebasketballapp.TeamListJsonUtils;
 import com.example.jeffr.collegebasketballapp.TeamProfileActivity;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -43,7 +44,7 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
     private PieChart pieChart;
     private RecyclerView recyclerView;
     private PlayerRecyclerView playerRecyclerView;
-
+    List<Player> playerList;
     private TextView teamTitle;
 
     @Nullable
@@ -51,14 +52,16 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_team_info, container, false);
 
+
         pieChart = rootView.findViewById(R.id.team_wins_piechart);
         recyclerView = rootView.findViewById(R.id.team_players_recyclerview);
         teamTitle = rootView.findViewById(R.id.team_name_textview);
 
         final FragmentActivity fragmentActivity = getActivity();
 
-        //TODO Change for gender leagues
-        new FetchPlayersTask().execute(true);
+        new FetchPlayersTask().execute(getActivity().getIntent().getExtras().getBoolean("Male"));
+
+        teamTitle.setText(TeamProfileActivity.team.getName());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -84,9 +87,10 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
 
     @Override
     public void rowSelected(int row) {
-//        PlayerProfileActivity.player = TeamProfileActivity.team.getTeamPlayers().get(row);
-//        Intent intent = new Intent(getActivity(),PlayerProfileActivity.class);
-//        startActivity(intent);
+        //TODO Change to bundle usage
+        PlayerProfileActivity.playerId = playerList.get(row).getId();
+        Intent intent = new Intent(getActivity(),PlayerProfileActivity.class);
+        startActivity(intent);
     }
 
     private void addDataSet(float[] yData, String[] xData, PieChart pieChart) {
@@ -128,6 +132,7 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
         pieChart.setData(pieData);
         pieChart.invalidate();
         pieChart.setTouchEnabled(false);
+        pieChart.animateY(3000, Easing.EasingOption.EaseInBack);
     }
 
     public class FetchPlayersTask extends AsyncTask<Boolean, Void, List<Player> > {
@@ -153,6 +158,7 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
         }
         @Override
         protected void onPostExecute(List<Player> playersData) {
+            playerList = playersData;
             recyclerView.setAdapter(new PlayerRecyclerView(playersData,TeamInfoFragment.this));
         }
     }

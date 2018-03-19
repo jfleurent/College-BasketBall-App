@@ -40,6 +40,8 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
     private PlaceholderFragment.SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private static ProgressBar progressBar;
+    private TabLayout.Tab tab1;
+    private TabLayout.Tab tab2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +58,32 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+
+                mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+                if(tab.equals(tabLayout.getTabAt(0))){
+                    PlaceholderFragment.rowNumber = 1;
+                }
+                else{
+                    PlaceholderFragment.rowNumber = 2;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
@@ -85,8 +110,6 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
     }
 

@@ -55,13 +55,6 @@
                     android:layout_height="wrap_content"
                     android:text="Name: Andrew Jackson"/>
                 <TextView
-                    android:id="@+id/player_DOB_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Date of Birth: 08/12/1992"
-                    />
-                <TextView
                     android:id="@+id/player_birth_place_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
