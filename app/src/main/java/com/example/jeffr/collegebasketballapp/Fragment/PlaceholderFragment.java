@@ -26,6 +26,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 /**
  * Created by jeffr on 3/17/2018.
  */
@@ -34,10 +36,13 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
 
     private static final String TAG = PlaceholderFragment.class.getSimpleName();
     private RecyclerView r;
-    private  static List<List<Team>> teamList = new ArrayList<>();
+    public  static List<List<Team>> teamList = new ArrayList<>();
     private static List<PlaceholderFragment> fragments = new ArrayList<>();
     private  static final String ARG_SECTION_NUMBER = "section_number";
     public static int rowNumber = 1;
+    public static int listIndex = 0;
+
+    public static boolean male = false;
 
     private static TeamRecyclerView teamRecyclerView;
 
@@ -49,6 +54,7 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
+        male = false;
         fragments.add(fragment);
         return fragment;
     }
@@ -65,22 +71,17 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
         final FragmentActivity fragmentActivity = getActivity();
 
 
-            new FetchTeamsTask().execute(false);
 
-            if(getArguments().getInt(ARG_SECTION_NUMBER)%2 == 1 && !teamList.isEmpty() ){
-                teamRecyclerView = new TeamRecyclerView(teamList.get(0),PlaceholderFragment.this);
-                PlaceholderFragment.newInstance(1).r.setAdapter(teamRecyclerView);
-            }
-            else if(getArguments().getInt(ARG_SECTION_NUMBER)%2 == 0 && !teamList.isEmpty()){
-                teamRecyclerView = new TeamRecyclerView(teamList.get(1),PlaceholderFragment.this);
-                PlaceholderFragment.newInstance(2).r.setAdapter(teamRecyclerView);
-            }
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity);
+
 
         r = rootView.findViewById(R.id.teams_recyclerview);
         r.setLayoutManager(linearLayoutManager);
         r.setItemAnimator(new DefaultItemAnimator());
+        teamRecyclerView = new TeamRecyclerView(teamList.get(listIndex++%2),PlaceholderFragment.this);
+        r.setAdapter(teamRecyclerView);
 
         return rootView;
     }
@@ -105,51 +106,7 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
 
     }
 
-    public class FetchTeamsTask extends AsyncTask<Boolean, Void, List<List<Team>>> {
 
-        @Override
-        protected List<List<Team>> doInBackground(Boolean... params) {
-            List<List<Team>> wholeLeagueOfYear = new ArrayList<>();
-
-            URL teamListRequestUrl1 = NetworkUtils.buildTeamListUrl(true,"2017");
-            URL teamListRequestUrl2 = NetworkUtils.buildTeamListUrl(false,"2017");
-
-            try {
-                String jsonTeamListResponse = NetworkUtils
-                        .getResponseFromHttpUrl(teamListRequestUrl1);
-
-                List<Team> teams = TeamListJsonUtils
-                        .getTeamsFromJson(getActivity(), jsonTeamListResponse);
-
-                wholeLeagueOfYear.add(teams);
-
-                jsonTeamListResponse = NetworkUtils
-                        .getResponseFromHttpUrl(teamListRequestUrl2);
-
-                teams = TeamListJsonUtils
-                        .getTeamsFromJson(getActivity(), jsonTeamListResponse);
-                 wholeLeagueOfYear.add(teams);
-
-                return wholeLeagueOfYear;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<List<Team>> teamData) {
-            teamList = teamData;
-            PlaceholderFragment fragment1 = fragments.get(0);
-            PlaceholderFragment fragment2 = fragments.get(1);
-            teamRecyclerView = new TeamRecyclerView(teamList.get(0),PlaceholderFragment.this);
-            fragment1.r.setAdapter(teamRecyclerView);
-            teamRecyclerView = new TeamRecyclerView(teamList.get(1),PlaceholderFragment.this);
-            fragment2.r.setAdapter(teamRecyclerView);
-
-        }
-    }
 
     public static class SectionsPagerAdapter extends FragmentPagerAdapter {
 

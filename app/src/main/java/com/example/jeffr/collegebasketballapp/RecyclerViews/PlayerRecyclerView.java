@@ -48,12 +48,12 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
     @Override
     public void onBindViewHolder(final PlayerRecyclerViewHolder holder, int position) {
         holder.playerPosition.setText("Position: "+playerList.get(position).getPosition());
-        String number = playerList.get(position).getNumber().length() == 2 ?playerList.get(position).getNumber() :
+        String number = playerList.get(position).getNumber().length() > 1 ?playerList.get(position).getNumber() :
                 "0"+playerList.get(position).getNumber();
         holder.playerNumber.setText(number);
         holder.playerLastName.setText("Last Name: "+playerList.get(position).getLastName());
         holder.playerFirstName.setText("First Name: "+playerList.get(position).getFirstName());
-        holder.playerExperience.setText("FR");
+        holder.playerExperience.setText(playerList.get(position).getExperience());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

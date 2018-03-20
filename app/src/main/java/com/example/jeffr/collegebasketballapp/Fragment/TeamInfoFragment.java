@@ -89,8 +89,10 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
     public void rowSelected(int row) {
         //TODO Change to bundle usage
         PlayerProfileActivity.playerId = playerList.get(row).getId();
-        Intent intent = new Intent(getActivity(),PlayerProfileActivity.class);
-        startActivity(intent);
+      Intent intent = new Intent(getActivity(),PlayerProfileActivity.class);
+      boolean g = getActivity().getIntent().getExtras().getBoolean("Male");
+      intent.putExtra("Male",getActivity().getIntent().getExtras().getBoolean("Male"));
+      startActivity(intent);
     }
 
     private void addDataSet(float[] yData, String[] xData, PieChart pieChart) {
