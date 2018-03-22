@@ -106,6 +106,8 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
+        pieChart.setCenterText("Win/Loss");
+        pieChart.setCenterTextSize(10);
         pieChart.setTouchEnabled(false);
 
     }

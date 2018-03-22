@@ -4,15 +4,12 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +17,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jeffr.collegebasketballapp.DataObjects.Player;
-import com.example.jeffr.collegebasketballapp.DataObjects.Team;
-import com.example.jeffr.collegebasketballapp.Fragment.PlaceholderFragment;
-import com.example.jeffr.collegebasketballapp.RecyclerViews.PlayerRecyclerView;
-import com.example.jeffr.collegebasketballapp.RecyclerViews.RecyclerViewOnClick;
-import com.example.jeffr.collegebasketballapp.RecyclerViews.TeamRecyclerView;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -35,7 +27,6 @@ import com.github.mikephil.charting.data.PieEntry;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerProfileActivity extends AppCompatActivity {
     public static String playerId;
@@ -47,6 +38,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_profile);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.light_gray));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -164,16 +156,17 @@ public class PlayerProfileActivity extends AppCompatActivity {
             ArrayList<PieEntry> yEntrys = new ArrayList<>();
             ArrayList<String> xEntrys = new ArrayList<>();
 
+            String[] start = {"Start","Not Start"};
             for(int i = 0; i < yData.length; i++){
-                yEntrys.add(new PieEntry(yData[i] , i));
+                yEntrys.add(new PieEntry(yData[i] , start[i]));
             }
 
             for(int i = 1; i < xData.length; i++){
                 xEntrys.add(xData[i]);
             }
 
-            PieDataSet pieDataSet = new PieDataSet(yEntrys, "Win/Loss");
-            pieDataSet.setValueTextSize(0);
+            PieDataSet pieDataSet = new PieDataSet(yEntrys, "");
+            pieDataSet.setValueTextSize(15);
 
 
             ArrayList<Integer> colors = new ArrayList<>();
@@ -185,8 +178,10 @@ public class PlayerProfileActivity extends AppCompatActivity {
             pieDataSet.setColors(colors);
 
             Legend legend = pieChart.getLegend();
-            legend.setForm(Legend.LegendForm.CIRCLE);
-            legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+            legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+            legend.setTextSize(10);
+            legend.setForm(Legend.LegendForm.SQUARE);
+            legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
             legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
 
             Description description = pieChart.getDescription();
@@ -199,7 +194,9 @@ public class PlayerProfileActivity extends AppCompatActivity {
 
             pieChart.setData(pieData);
             pieChart.invalidate();
-            pieChart.setTouchEnabled(false);
+            pieChart.setCenterText("Start Ratio");
+            pieChart.setCenterTextSize(20);
+            pieChart.setRotationEnabled(false);
             pieChart.animateY(3000, Easing.EasingOption.EaseInBack);
 
         }

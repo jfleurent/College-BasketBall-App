@@ -44,4 +44,20 @@ public class Game {
     public void setHomwId(String homwId) {
         this.homwId = homwId;
     }
+
+    public String getAwayName() {
+        return awayName;
+    }
+
+    public void setAwayName(String awayName) {
+        this.awayName = awayName;
+    }
+
+    public String getHomeName() {
+        return homeName;
+    }
+
+    public void setHomeName(String homeName) {
+        this.homeName = homeName;
+    }
 }

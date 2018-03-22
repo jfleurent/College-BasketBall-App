@@ -18,6 +18,7 @@ package com.example.jeffr.collegebasketballapp;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.example.jeffr.collegebasketballapp.DataObjects.Game;
 import com.example.jeffr.collegebasketballapp.DataObjects.Player;
 import com.example.jeffr.collegebasketballapp.DataObjects.Team;
 
@@ -25,9 +26,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.jeffr.collegebasketballapp.NetworkUtils.buildGameListUrl;
 
 public final class TeamListJsonUtils {
 
@@ -45,7 +49,7 @@ public final class TeamListJsonUtils {
                JSONObject team = conferences.getJSONObject(i).getJSONArray("teams").getJSONObject(j);
                 if(!uniqueTeamList.contains(team.getString("id"))){
                     parsedTeamListData.add(new Team(team.getInt("wins"),team.getInt("losses")
-                            ,team.getString("market"),team.getString("name"),null,team.getString("id")));
+                            ,team.getString("market"),team.getString("name"),null,team.getString("id"),new ArrayList<Game>()));
                     uniqueTeamList.add(team.getString("id"));
                 }
            }
@@ -76,6 +80,32 @@ public final class TeamListJsonUtils {
         }
 
         return parsedPlayerListData;
+    }
+
+    public static List<Game> getGamesFromJson(Context context, boolean male, int day, String year)
+            throws JSONException,IOException {
+
+        List<Game> parsedGameListData = new ArrayList<>();
+
+        for(int i = 0; i < 1; i++){
+           String teamPlayersJsonStr = NetworkUtils.getResponseFromHttpUrl(buildGameListUrl(male,day+i,year));
+            JSONObject playerJson = new JSONObject(teamPlayersJsonStr);
+
+            JSONArray games = playerJson.getJSONArray("games");
+            for(int j = 0; j < games.length(); j++){
+                JSONObject game = games.getJSONObject(j);
+                String homeName = game.getJSONObject("home").getString("name");
+                String homeId = game.getJSONObject("home").getString("id");
+                String awayName = game.getJSONObject("away").getString("name");
+                int homeScore = game.getInt("home_points");
+                int awayScore = game.getInt("away_points");
+                parsedGameListData.add(new Game(homeId,homeName,awayName,homeScore,awayScore));
+            }
+        }
+
+
+
+        return parsedGameListData;
     }
 
     //TODO might need year for this method with players playing in different seasons

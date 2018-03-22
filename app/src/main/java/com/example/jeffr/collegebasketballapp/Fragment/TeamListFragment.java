@@ -1,12 +1,13 @@
 package com.example.jeffr.collegebasketballapp.Fragment;
 
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,17 +15,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.example.jeffr.collegebasketballapp.DataObjects.Team;
-import com.example.jeffr.collegebasketballapp.NetworkUtils;
 import com.example.jeffr.collegebasketballapp.R;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.RecyclerViewOnClick;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.TeamRecyclerView;
-import com.example.jeffr.collegebasketballapp.TeamListJsonUtils;
 import com.example.jeffr.collegebasketballapp.TeamProfileActivity;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +31,12 @@ import java.util.List;
  * Created by jeffr on 3/17/2018.
  */
 
-public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick {
+public class TeamListFragment extends Fragment implements RecyclerViewOnClick {
 
-    private static final String TAG = PlaceholderFragment.class.getSimpleName();
-    public static RecyclerView r;
+    private static final String TAG = TeamListFragment.class.getSimpleName();
+    public  RecyclerView r;
     public  static List<List<Team>> teamList = new ArrayList<>();
-    private static List<PlaceholderFragment> fragments = new ArrayList<>();
+    private static List<TeamListFragment> fragments = new ArrayList<>();
     private  static final String ARG_SECTION_NUMBER = "section_number";
     public static int rowNumber = 1;
     public static int listIndex = 0;
@@ -48,11 +45,11 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
 
     private static TeamRecyclerView teamRecyclerView;
 
-    public PlaceholderFragment() {
+    public TeamListFragment() {
     }
 
-    public static PlaceholderFragment newInstance(int sectionNumber) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static TeamListFragment newInstance(int sectionNumber) {
+        TeamListFragment fragment = new TeamListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -62,9 +59,7 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
     }
 
 
-    public static List<PlaceholderFragment> getFragments() {
-        return fragments;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,8 +71,10 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
         r = rootView.findViewById(R.id.teams_recyclerview);
         r.setLayoutManager(linearLayoutManager);
         r.setItemAnimator(new DefaultItemAnimator());
-        teamRecyclerView = new TeamRecyclerView(teamList.get(listIndex++%2),PlaceholderFragment.this);
+        teamRecyclerView = new TeamRecyclerView(teamList.get(listIndex++%2),TeamListFragment.this);
         r.setAdapter(teamRecyclerView);
+        //#6A1B9A
+
 
         return rootView;
     }
@@ -112,11 +109,12 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position + 1);
+            return TeamListFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
+
             return 2;
         }
     }

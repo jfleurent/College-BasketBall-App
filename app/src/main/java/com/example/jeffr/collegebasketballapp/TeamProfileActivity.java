@@ -2,6 +2,7 @@ package com.example.jeffr.collegebasketballapp;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,9 @@ import android.widget.TextView;
 import com.example.jeffr.collegebasketballapp.DataObjects.Team;
 
 import com.example.jeffr.collegebasketballapp.Fragment.TeamInfoFragment;
+import com.example.jeffr.collegebasketballapp.Fragment.TeamListFragment;
+
+import static com.example.jeffr.collegebasketballapp.BasketballLeagueHomeActivity.homeTeamData;
 
 public class TeamProfileActivity extends AppCompatActivity {
     public static Team team;
@@ -29,6 +33,7 @@ public class TeamProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.light_gray));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,6 +45,7 @@ public class TeamProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        BasketballLeagueHomeActivity.searched = false;
         finish();
         return true;
     }
