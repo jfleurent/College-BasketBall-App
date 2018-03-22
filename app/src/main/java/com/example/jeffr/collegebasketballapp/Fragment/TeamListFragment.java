@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
 import com.example.jeffr.collegebasketballapp.DataObjects.Team;
 import com.example.jeffr.collegebasketballapp.NetworkUtils;
 import com.example.jeffr.collegebasketballapp.R;
@@ -35,7 +37,7 @@ import java.util.List;
 public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick {
 
     private static final String TAG = PlaceholderFragment.class.getSimpleName();
-    private RecyclerView r;
+    public static RecyclerView r;
     public  static List<List<Team>> teamList = new ArrayList<>();
     private static List<PlaceholderFragment> fragments = new ArrayList<>();
     private  static final String ARG_SECTION_NUMBER = "section_number";
@@ -59,6 +61,7 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
         return fragment;
     }
 
+
     public static List<PlaceholderFragment> getFragments() {
         return fragments;
     }
@@ -69,14 +72,7 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
         View rootView = inflater.inflate(R.layout.fragment_basketbball_league_home, container, false);
 
         final FragmentActivity fragmentActivity = getActivity();
-
-
-
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity);
-
-
         r = rootView.findViewById(R.id.teams_recyclerview);
         r.setLayoutManager(linearLayoutManager);
         r.setItemAnimator(new DefaultItemAnimator());
@@ -124,6 +120,7 @@ public class PlaceholderFragment extends Fragment implements RecyclerViewOnClick
             return 2;
         }
     }
+
 
 
 }
