@@ -17,14 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.jeffr.collegebasketballapp.DataObjects.Game;
 import com.example.jeffr.collegebasketballapp.DataObjects.Player;
 import com.example.jeffr.collegebasketballapp.NetworkUtils;
 import com.example.jeffr.collegebasketballapp.PlayerProfileActivity;
 import com.example.jeffr.collegebasketballapp.R;
+import com.example.jeffr.collegebasketballapp.RecyclerViews.GameRecyclerView;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.PlayerRecyclerView;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.RecyclerViewOnClick;
 import com.example.jeffr.collegebasketballapp.TeamListJsonUtils;
 import com.example.jeffr.collegebasketballapp.TeamProfileActivity;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -42,28 +45,40 @@ import java.util.List;
 public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
     private PieChart pieChart;
     private RecyclerView recyclerView;
+   private RecyclerView recyclerView2;
     private PlayerRecyclerView playerRecyclerView;
-
+    List<Player> playerList;
     private TextView teamTitle;
+    private TextView leagueGender;
+    private TextView teamRegion;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_team_info, container, false);
 
+String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men" : "Women";
         pieChart = rootView.findViewById(R.id.team_wins_piechart);
         recyclerView = rootView.findViewById(R.id.team_players_recyclerview);
+       recyclerView2 = rootView.findViewById(R.id.team_games_recyclerview);
         teamTitle = rootView.findViewById(R.id.team_name_textview);
+        leagueGender = rootView.findViewById(R.id.gender_league_textview);
+        teamRegion = rootView.findViewById(R.id.team_region_textview);
+
 
         final FragmentActivity fragmentActivity = getActivity();
 
-        //TODO Change for gender leagues
-        new FetchPlayersTask().execute(true);
+        new FetchPlayersTask().execute(getActivity().getIntent().getExtras().getBoolean("Male"));
 
+        teamTitle.setText(TeamProfileActivity.team.getName());
+        leagueGender.setText(gender);
+        teamRegion.setText(TeamProfileActivity.team.getCity());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(fragmentActivity);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView2.setLayoutManager(linearLayoutManager2);
+        recyclerView2.setItemAnimator(new DefaultItemAnimator());
 
 
 
@@ -84,40 +99,40 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
 
     @Override
     public void rowSelected(int row) {
-//        PlayerProfileActivity.player = TeamProfileActivity.team.getTeamPlayers().get(row);
-//        Intent intent = new Intent(getActivity(),PlayerProfileActivity.class);
-//        startActivity(intent);
+        //TODO Change to bundle usage
+        PlayerProfileActivity.playerId = playerList.get(row).getId();
+      Intent intent = new Intent(getActivity(),PlayerProfileActivity.class);
+      intent.putExtra("Male",getActivity().getIntent().getExtras().getBoolean("Male"));
+      startActivity(intent);
     }
 
     private void addDataSet(float[] yData, String[] xData, PieChart pieChart) {
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
-
+        String[] winloss = {"\nWin","\nLoss"};
         for(int i = 0; i < yData.length; i++){
-            yEntrys.add(new PieEntry(yData[i] , i));
+            yEntrys.add(new PieEntry(yData[i] ,winloss[i]));
         }
 
         for(int i = 1; i < xData.length; i++){
             xEntrys.add(xData[i]);
         }
 
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Win/Loss");
-        pieDataSet.setValueTextSize(0);
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "");
+        pieDataSet.setValueTextSize(15);
+
         
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(Color.GREEN);
         colors.add(Color.RED);
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
-        colors.add(Color.CYAN);
-        colors.add(Color.YELLOW);
-        colors.add(Color.MAGENTA);
 
         pieDataSet.setColors(colors);
 
         Legend legend = pieChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legend.setTextSize(10);
+        legend.setForm(Legend.LegendForm.SQUARE);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
 
         Description description = pieChart.getDescription();
@@ -127,7 +142,11 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
 
         pieChart.setData(pieData);
         pieChart.invalidate();
-        pieChart.setTouchEnabled(false);
+        pieChart.setCenterText("Win/Loss");
+        pieChart.setCenterTextSize(20);
+        pieChart.setRotationEnabled(false);
+
+        pieChart.animateY(3000, Easing.EasingOption.EaseInBack);
     }
 
     public class FetchPlayersTask extends AsyncTask<Boolean, Void, List<Player> > {
@@ -144,6 +163,7 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
                 List<Player> players = TeamListJsonUtils
                         .getPlayersFromJson(getActivity(), jsonPlayerListResponse);
 
+
                 return players;
 
             } catch (Exception e) {
@@ -153,7 +173,11 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
         }
         @Override
         protected void onPostExecute(List<Player> playersData) {
+            playerList = playersData;
             recyclerView.setAdapter(new PlayerRecyclerView(playersData,TeamInfoFragment.this));
+
+            //TODO Implement this before test
+            recyclerView2.setAdapter(new GameRecyclerView(TeamProfileActivity.team.getTeamGames(),TeamInfoFragment.this));
         }
     }
     public static class PagerAdapter extends FragmentPagerAdapter {

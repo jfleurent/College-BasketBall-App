@@ -47,13 +47,13 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
 
     @Override
     public void onBindViewHolder(final PlayerRecyclerViewHolder holder, int position) {
-        float[] playTime = {playerList.get(position).getTimePlayed(),playerList.get(position).getTimeNotPlayed()};
-        String[] pieChartItems = {"Time Played","Time Not Played"};
         holder.playerPosition.setText("Position: "+playerList.get(position).getPosition());
-        holder.playerNumber.setText(playerList.get(position).getNumber());
+        String number = playerList.get(position).getNumber().length() > 1 ?playerList.get(position).getNumber() :
+                "0"+playerList.get(position).getNumber();
+        holder.playerNumber.setText(number);
         holder.playerLastName.setText("Last Name: "+playerList.get(position).getLastName());
         holder.playerFirstName.setText("First Name: "+playerList.get(position).getFirstName());
-        holder.playerExperience.setText("FR");
+        holder.playerExperience.setText(playerList.get(position).getExperience());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

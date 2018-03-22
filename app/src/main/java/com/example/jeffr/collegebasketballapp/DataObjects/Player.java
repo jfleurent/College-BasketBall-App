@@ -5,13 +5,13 @@ package com.example.jeffr.collegebasketballapp.DataObjects;
  */
 
 public class Player {
-    private float timePlayed;
-    private float timeNotPlayed;
+    private String id;
+    private int timePlayed;
+    private int timeNotPlayed;
     private String firstName;
     private String lastName;
     private String position;
     private String number;
-    private String birthDate;
     private String birthPlace;
     private String height;
     private String weight;
@@ -50,27 +50,27 @@ public class Player {
 
 
     public Player(String firstName, String lastName,
-                  String position, String number, String experience){
+                  String position, String number, String experience, String id){
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
         this.number =number;
         this.experience = experience;
+        this.id = id;
 
     }
 
-
-    public Player(float timePlayed, float timeNotPlayed, String firstName, String lastName,
-                  String position, String number,String birthDate,String birthPlace,
-                  String height,String weight,String totalAssists,String assistsPerGame,
-                  String turnoverToAssist, String blockAttempts,String blockAttemptsPerGame,
+    public Player(int timePlayed, int timeNotPlayed, String firstName, String lastName,
+                  String position, String number, String birthPlace,
+                  String height, String weight, String totalAssists, String assistsPerGame,
+                  String turnoverToAssist, String blockAttempts, String blockAttemptsPerGame,
                   String sucessfulBlocks, String sucessfulBlocksPerGame, String defensiveRebounds,
                   String defensiveReboundsPerGame, String freeThrowsAttempts,
-                  String freeThrowsAttemptsPerGame,String freeThrowPercentage, String sucessfulfreeThrow,
-                  String sucessfulFreeThrowPerGame,String totalRebounds, String reboundsPerGame,
-                  String threePointAttempts, String threePointAttemptsPerGame,String threePointPercentage,
-                  String sucessfulThreePoint,String sucessfulThreePointPerGame, String trueShotAttempts,
-                  String trueShotAttemptsPerGame, String trueShotPercentage,String turnovers,
+                  String freeThrowsAttemptsPerGame, String freeThrowPercentage, String sucessfulfreeThrow,
+                  String sucessfulFreeThrowPerGame, String totalRebounds, String reboundsPerGame,
+                  String threePointAttempts, String threePointAttemptsPerGame, String threePointPercentage,
+                  String sucessfulThreePoint, String sucessfulThreePointPerGame, String trueShotAttempts,
+                  String trueShotAttemptsPerGame, String trueShotPercentage, String turnovers,
                   String turnoverPerGame, String twoPointAttempts, String twoPointAttemptsPercentage,
                   String twoPointAttemptsPerGame, String sucessfulTwoPoint, String sucessfulTwoPointPerGame){
         this.firstName = firstName;
@@ -79,7 +79,6 @@ public class Player {
         this.number = number;
         this.timeNotPlayed = timeNotPlayed;
         this.timePlayed = timePlayed;
-        this.birthDate = birthDate;
         this.birthPlace = birthPlace;
         this.height = height;
         this.weight = weight;
@@ -124,20 +123,26 @@ public class Player {
         this.experience = experience;
     }
 
-    public float getTimePlayed() {
+    public int getTimePlayed() {
         return timePlayed;
     }
 
-    public void setTimePlayed(float timePlayed) {
+    public void setTimePlayed(int timePlayed) {
         this.timePlayed = timePlayed;
     }
 
-    public float getTimeNotPlayed() {
+    public int getTimeNotPlayed() {
 
         return timeNotPlayed;
     }
+    public String getId() {
+        return id;
+    }
 
-    public void setTimeNotPlayed(float timeNotPlayed) {
+    public void setId(String id) {
+        this.id = id;
+    }
+    public void setTimeNotPlayed(int timeNotPlayed) {
         this.timeNotPlayed = timeNotPlayed;
     }
 
@@ -471,14 +476,6 @@ public class Player {
         this.birthPlace = birthPlace;
     }
 
-    public String getBirthDate() {
-
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
 
     public String getAssistsPerGame() {
 

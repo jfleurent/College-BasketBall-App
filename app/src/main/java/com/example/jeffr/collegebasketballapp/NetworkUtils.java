@@ -35,7 +35,7 @@ public final class NetworkUtils {
 
     public static URL buildPlayerUrl(boolean male, String player_id) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "4h8d6yn5wvnkjawh5engcyxq" : "n7wczq8gmnxxu9acw7sktyax";
+        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel +"/"+version + "/" + languageCode + "/players/" +
                 player_id +"/profile." + format +"?api_key="+apiKey;
 
@@ -53,7 +53,7 @@ public final class NetworkUtils {
 
     public static URL buildTeamUrl(boolean male, String team_id) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "4h8d6yn5wvnkjawh5engcyxq" : "n7wczq8gmnxxu9acw7sktyax";
+        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel + "/"+version + "/" + languageCode + "/teams/" +
                 team_id +"/profile." + format +"?api_key="+apiKey;
 
@@ -71,7 +71,7 @@ public final class NetworkUtils {
 
     public static URL buildTeamListUrl(boolean male,String year) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "4h8d6yn5wvnkjawh5engcyxq" : "n7wczq8gmnxxu9acw7sktyax";
+        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel + "/"+version + "/" + languageCode + "/seasons/" +
                 year + "/REG/standings." + format +"?api_key="+apiKey;
 
@@ -89,7 +89,7 @@ public final class NetworkUtils {
 
     public static URL buildPlayerListUrl(boolean male,String teamId) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "4h8d6yn5wvnkjawh5engcyxq" : "n7wczq8gmnxxu9acw7sktyax";
+        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel + "/"+version + "/" + languageCode + "/teams/" +
                 teamId + "/profile." + format +"?api_key="+apiKey;
 
@@ -105,18 +105,24 @@ public final class NetworkUtils {
         return url;
     }
 
+    /*https://api.sportradar.us/ncaamb/{access_level}/{version}/{language_code}/games/{year}/{month}/{day}/
+    schedule.{format}?api_key={your_api_key}*/
+    public static URL buildGameListUrl(boolean male,int day,String year) {
+        TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
+        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
+        String query = TEAM_DATA_BASE_URL + "/"+ accessLevel + "/"+version + "/" + languageCode + "/games/" +year+"/12/"+
+                day + "/schedule." + format +"?api_key="+apiKey;
 
-    /**
-     * Builds the URL used to talk to the weather server using latitude and longitude of a
-     * location.
-     *
-     * @param lat The latitude of the location
-     * @param lon The longitude of the location
-     * @return The Url to use to query the weather server.
-     */
-    public static URL buildUrl(Double lat, Double lon) {
-        /** This will be implemented in a future lesson **/
-        return null;
+        URL url = null;
+        try {
+            url = new URL(query);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built URI " + url);
+
+        return url;
     }
 
     /**

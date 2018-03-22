@@ -10,12 +10,29 @@
         android:orientation="vertical"
         >
         <TextView
+            android:id="@+id/gender_league_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Men"
+            android:textAlignment="center"
+            android:textSize="40sp" />
+
+        <TextView
             android:id="@+id/team_name_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Eagles"
             android:textAlignment="center"
             android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/team_region_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gulf Coast"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:layout_marginBottom="10dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -29,6 +46,11 @@
 
         </RelativeLayout>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/team_games_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/team_players_recyclerview"
