@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.jeffr.collegebasketballapp.DataObjects.Player;
+import com.example.jeffr.collegebasketballapp.Utilities.JsonUtils;
+import com.example.jeffr.collegebasketballapp.Utilities.NetworkUtils;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -212,7 +214,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     String jsonPlayerResponse = NetworkUtils
                             .getResponseFromHttpUrl(playerRequestUrl1);
 
-                    player = TeamListJsonUtils
+                    player = JsonUtils
                             .getPlayerFromJson(getActivity(), jsonPlayerResponse,2017,TeamProfileActivity.team.getId());
 
 
@@ -236,7 +238,9 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     playerName.setText("Name: " + playerData.getFirstName() + " " + playerData.getLastName());
                     playerBirthPlace.setText("Birth Place: " + playerData.getBirthPlace());
                     playerHeight.setText("Height: " + playerData.getHeight() + " in");
-                    playerWeight.setText("Weight: " + playerData.getWeight() + " lbs");
+                    String weight = getActivity().getIntent().getExtras().getBoolean("Male") ?
+                            "Weight: " + playerData.getWeight() + " lbs" : "Weight: " + playerData.getWeight();
+                    playerWeight.setText(weight);
                     playerPosition.setText("Position: " + playerData.getPosition());
                     totalAssists.setText("Total: " + playerData.getTotalAssists());
                     assistsPerGame.setText("Per Game: " + playerData.getAssistsPerGame());
@@ -246,7 +250,7 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     blockedShotsPerGame.setText("Blocked Shots Per Game: " + playerData.getSucessfulBlocksPerGame());
                     totalRebounds.setText("Total Attempts: " + playerData.getTotalRebounds());
                     reboundsPerGame.setText("Attempts Per Game: " + playerData.getReboundsPerGame());
-                    defensiveREbounds.setText("Defeensive Rebounds: " + playerData.getDefensiveRebounds());
+                    defensiveREbounds.setText("Defensive Rebounds: " + playerData.getDefensiveRebounds());
                     defensiveReboundsPerGame.setText("Defensive Rebounds Per Game: " + playerData.getDefensiveReboundsPerGame());
                     turnoverAttempts.setText("Total Attempts: " + playerData.getTurnovers());
                     turnoversPerGame.setText("Attempts Per Game: " + playerData.getTurnoverPerGame());
@@ -255,18 +259,30 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     freeThrowPerGame.setText("Per Game: " + playerData.getSucessfulFreeThrowPerGame());
                     successfulFreeThrow.setText("Free Throws Made: " + playerData.getSucessfulfreeThrow());
                     sucessfulFreeThrowPerGame.setText("Free Throws Made Per Game: " + playerData.getSucessfulFreeThrowPerGame());
-                    freeThrowPercentage.setText("Percentage :" + playerData.getFreeThrowPercentage());
+
+                    double percentage = Double.valueOf(playerData.getFreeThrowPercentage())*100;
+                    freeThrowPercentage.setText("Free Throw Percentage :" + percentage+"%");
+//
+
                     totalTwoPointer.setText("Total Attempts: " + playerData.getTwoPointAttempts());
                     twoPointerPerGame.setText("Attempts Per Game: " + playerData.getTwoPointAttemptsPerGame());
                     sucessfulTwoPointer.setText("Two Pointers Made: " + playerData.getSucessfulTwoPoint());
                     sucessfulTwoPointerPerGame.setText("Two Pointers Made Per Game: " + playerData.getSucessfulTwoPointPerGame());
-                    twoPointerPercentage.setText("Two Pointer Percentage: " + playerData.getTwoPointAttemptsPercentage());
-                    threePointerPercentage.setText("Three Pointer Percentage: " + playerData.getThreePointPercentage());
+
+                    percentage = Double.valueOf(playerData.getTwoPointAttemptsPercentage())*100;
+                    twoPointerPercentage.setText("Two Pointer Percentage: " + percentage+"%");
+
+                    percentage = Double.valueOf(playerData.getThreePointPercentage())*100;
+                    threePointerPercentage.setText("Three Pointer Percentage: " + percentage+"%");
+
                     threePointerPerGame.setText("Three Pointers Per Game: " + playerData.getThreePointAttemptsPerGame());
                     sucessfulThreePointer.setText("Three Pointers Made: " + playerData.getSucessfulThreePoint());
                     sucessfulThreePointerPerGame.setText("Three Pointer Made Per Game: " + playerData.getSucessfulThreePointPerGame());
                     totalThreePointer.setText("Total Attempts: " + playerData.getThreePointAttempts());
-                    trueShotPercentage.setText("True Shot Percentage: " + playerData.getTrueShotPercentage());
+
+                    percentage = Double.valueOf(playerData.getTrueShotPercentage())*100;
+                    trueShotPercentage.setText("True Shot Percentage: " + percentage+"%");
+
                     trueShotPerGame.setText("Attempts Per Game: " + playerData.getTrueShotAttemptsPerGame());
                     totalTrueShot.setText("Total Attempts: " + playerData.getTrueShotAttempts());
                 }

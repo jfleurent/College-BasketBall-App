@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="City"/>
+                android:text="Region"/>
             <TextView
                 android:id="@+id/team_city_textview"
                 android:layout_width="match_parent"

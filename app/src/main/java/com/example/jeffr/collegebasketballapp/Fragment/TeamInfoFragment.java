@@ -17,15 +17,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.jeffr.collegebasketballapp.DataObjects.Game;
 import com.example.jeffr.collegebasketballapp.DataObjects.Player;
-import com.example.jeffr.collegebasketballapp.NetworkUtils;
+import com.example.jeffr.collegebasketballapp.Utilities.NetworkUtils;
 import com.example.jeffr.collegebasketballapp.PlayerProfileActivity;
 import com.example.jeffr.collegebasketballapp.R;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.GameRecyclerView;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.PlayerRecyclerView;
 import com.example.jeffr.collegebasketballapp.RecyclerViews.RecyclerViewOnClick;
-import com.example.jeffr.collegebasketballapp.TeamListJsonUtils;
+import com.example.jeffr.collegebasketballapp.Utilities.JsonUtils;
 import com.example.jeffr.collegebasketballapp.TeamProfileActivity;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -160,7 +159,7 @@ String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men"
                 String jsonPlayerListResponse = NetworkUtils
                         .getResponseFromHttpUrl(playerListRequestUrl1);
 
-                List<Player> players = TeamListJsonUtils
+                List<Player> players = JsonUtils
                         .getPlayersFromJson(getActivity(), jsonPlayerListResponse);
 
 
@@ -176,7 +175,6 @@ String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men"
             playerList = playersData;
             recyclerView.setAdapter(new PlayerRecyclerView(playersData,TeamInfoFragment.this));
 
-            //TODO Implement this before test
             recyclerView2.setAdapter(new GameRecyclerView(TeamProfileActivity.team.getTeamGames(),TeamInfoFragment.this));
         }
     }
