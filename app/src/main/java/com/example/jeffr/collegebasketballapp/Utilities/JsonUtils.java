@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.jeffr.collegebasketballapp;
+package com.example.jeffr.collegebasketballapp.Utilities;
 
-import android.content.ContentValues;
 import android.content.Context;
 
 import com.example.jeffr.collegebasketballapp.DataObjects.Game;
@@ -27,13 +26,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.jeffr.collegebasketballapp.NetworkUtils.buildGameListUrl;
+import static com.example.jeffr.collegebasketballapp.Utilities.NetworkUtils.buildGameListUrl;
 
-public final class TeamListJsonUtils {
+public final class JsonUtils {
 
     public static List<Team> getTeamsFromJson(Context context, String teamJsonStr)
             throws JSONException {
@@ -97,8 +95,23 @@ public final class TeamListJsonUtils {
                 String homeName = game.getJSONObject("home").getString("name");
                 String homeId = game.getJSONObject("home").getString("id");
                 String awayName = game.getJSONObject("away").getString("name");
-                int homeScore = game.getInt("home_points");
-                int awayScore = game.getInt("away_points");
+                int homeScore = 0;
+                int awayScore = 0;
+
+                try{
+                    homeScore = game.getInt("home_points");
+                }
+                catch (Exception e){
+
+                }
+                try{
+                    awayScore = game.getInt("away_points");
+                }
+                catch (Exception e){
+
+                }
+
+
                 parsedGameListData.add(new Game(homeId,homeName,awayName,homeScore,awayScore));
             }
         }

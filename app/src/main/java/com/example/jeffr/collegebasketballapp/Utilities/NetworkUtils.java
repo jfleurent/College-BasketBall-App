@@ -1,4 +1,4 @@
-package com.example.jeffr.collegebasketballapp;
+package com.example.jeffr.collegebasketballapp.Utilities;
 import android.util.Log;
 
 import java.io.IOException;

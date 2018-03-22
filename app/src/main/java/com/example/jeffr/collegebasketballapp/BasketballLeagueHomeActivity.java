@@ -27,14 +27,16 @@ import android.widget.ProgressBar;
 import android.support.v7.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jeffr.collegebasketballapp.DataObjects.Game;
 import com.example.jeffr.collegebasketballapp.DataObjects.Team;
 import com.example.jeffr.collegebasketballapp.Fragment.TeamListFragment;
+import com.example.jeffr.collegebasketballapp.Utilities.JsonUtils;
+import com.example.jeffr.collegebasketballapp.Utilities.NetworkUtils;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -267,7 +269,13 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
                     }
                     newTeamList.add(otherTeamList);
                 }
-                TeamListFragment.teamList = newTeamList;
+                if(!newTeamList.get(0).isEmpty()&&!newTeamList.get(1).isEmpty()){
+                    TeamListFragment.teamList = newTeamList;
+                }
+                else{
+                    Toast.makeText(this,"Search not found",Toast.LENGTH_LONG).show();
+                }
+
 
                 mSectionsPagerAdapter = new TeamListFragment.SectionsPagerAdapter(getSupportFragmentManager());
                 mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -321,7 +329,7 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
                 String jsonTeamListResponse = NetworkUtils
                         .getResponseFromHttpUrl(teamListRequestUrl1);
 
-                List<Team> teams = TeamListJsonUtils
+                List<Team> teams = JsonUtils
                         .getTeamsFromJson(BasketballLeagueHomeActivity.this, jsonTeamListResponse);
 
                 wholeLeagueOfYear.add(teams);
@@ -329,7 +337,7 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
                 jsonTeamListResponse = NetworkUtils
                         .getResponseFromHttpUrl(teamListRequestUrl2);
 
-                teams = TeamListJsonUtils
+                teams = JsonUtils
                         .getTeamsFromJson(BasketballLeagueHomeActivity.this, jsonTeamListResponse);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -339,7 +347,7 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
 //                String jsonGameListResponse = NetworkUtils
 //                        .getResponseFromHttpUrl(gameListRequestUrl1);
 
-                List<Game> games = TeamListJsonUtils
+                List<Game> games = JsonUtils
                         .getGamesFromJson(BasketballLeagueHomeActivity.this,true,12,year);
 
                 wholeGamesOfYear.add(games);
@@ -347,7 +355,7 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
 //                jsonGameListResponse = NetworkUtils
 //                        .getResponseFromHttpUrl(gameListRequestUrl2);
 
-                games = TeamListJsonUtils
+                games = JsonUtils
                         .getGamesFromJson(BasketballLeagueHomeActivity.this, false,12,year);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
