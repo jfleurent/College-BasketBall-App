@@ -27,14 +27,14 @@ public class TeamProfileActivity extends AppCompatActivity {
     public static Team team;
     private TeamInfoFragment.PagerAdapter pagerAdapter;
     private ViewPager viewPager;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_profile);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.light_gray));
-        setSupportActionBar(toolbar);
+        toolbar = findViewById(R.id.toolbar); setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pagerAdapter = new TeamInfoFragment.PagerAdapter(getSupportFragmentManager());
@@ -45,7 +45,6 @@ public class TeamProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        BasketballLeagueHomeActivity.searched = false;
         finish();
         return true;
     }

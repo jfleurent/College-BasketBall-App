@@ -34,14 +34,14 @@ public class PlayerProfileActivity extends AppCompatActivity {
     public static String playerId;
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_profile);
         getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.light_gray));
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -49,8 +49,8 @@ public class PlayerProfileActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.container);
         viewPager.setAdapter(pagerAdapter);
     }
-    @Override
-    public boolean onSupportNavigateUp(){
+
+    @Override public boolean onSupportNavigateUp(){
         finish();
         return true;
     }
@@ -140,8 +140,6 @@ public class PlayerProfileActivity extends AppCompatActivity {
             trueShotPerGame = rootView.findViewById(R.id.per_game_true_shot_textview);
             totalTrueShot = rootView.findViewById(R.id.total_true_shot_textview);
             new FetchTeamsTask().execute(getActivity().getIntent().getExtras().getBoolean("Male"));
-
-
             return rootView;
         }
 
@@ -170,12 +168,9 @@ public class PlayerProfileActivity extends AppCompatActivity {
             PieDataSet pieDataSet = new PieDataSet(yEntrys, "");
             pieDataSet.setValueTextSize(15);
 
-
             ArrayList<Integer> colors = new ArrayList<>();
             colors.add(Color.GREEN);
             colors.add(Color.RED);
-
-
 
             pieDataSet.setColors(colors);
 
@@ -188,9 +183,6 @@ public class PlayerProfileActivity extends AppCompatActivity {
 
             Description description = pieChart.getDescription();
             description.setText("");
-
-
-
 
             PieData pieData = new PieData(pieDataSet);
 
@@ -216,8 +208,6 @@ public class PlayerProfileActivity extends AppCompatActivity {
 
                     player = JsonUtils
                             .getPlayerFromJson(getActivity(), jsonPlayerResponse,2017,TeamProfileActivity.team.getId());
-
-
 
                     return player;
 
@@ -263,7 +253,6 @@ public class PlayerProfileActivity extends AppCompatActivity {
                     double percentage = Double.valueOf(playerData.getFreeThrowPercentage())*100;
                     freeThrowPercentage.setText("Free Throw Percentage :" + percentage+"%");
 //
-
                     totalTwoPointer.setText("Total Attempts: " + playerData.getTwoPointAttempts());
                     twoPointerPerGame.setText("Attempts Per Game: " + playerData.getTwoPointAttemptsPerGame());
                     sucessfulTwoPointer.setText("Two Pointers Made: " + playerData.getSucessfulTwoPoint());

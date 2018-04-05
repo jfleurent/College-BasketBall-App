@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ThemedSpinnerAdapter;
@@ -39,65 +38,38 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 
 import static com.example.jeffr.collegebasketballapp.Fragment.TeamListFragment.teamList;
 
 public class BasketballLeagueHomeActivity extends AppCompatActivity {
 
     private TeamListFragment.SectionsPagerAdapter mSectionsPagerAdapter;
-    public static boolean searched;
     private ViewPager mViewPager;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
     private ProgressBar progressBar;
-    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private Spinner spinner;
     public static List<List<Team>> homeTeamData;
-
     public static String year = "2017";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.light_gray));
         setContentView(R.layout.activity_basketbball_league_home);
         progressBar = findViewById(R.id.pb_loading_indicator);
-        getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.light_gray));
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar = findViewById(R.id.toolbar2);
 
-
-
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.addOnTabSelectedListener(new MyTabAdapter());
 
-                mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mViewPager.setCurrentItem(tab.getPosition());
-                if(tab.equals(tabLayout.getTabAt(0))){
-                    TeamListFragment.rowNumber = 1;
-                }
-                else{
-                    TeamListFragment.rowNumber = 2;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
-
+        spinner = findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(new MySpinnerAdapter());
         spinner.setAdapter(new MyAdapter(
                 toolbar.getContext(),
                 new String[]{
@@ -108,54 +80,9 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
                         "2013",
                 }));
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch(position){
-                    case 0 :
-                        year = "2017";
-                        if(!searched){
-                            new FetchTeamsTask().execute();
-                        }
-                        searched = false;
-                        break;
-                    case 1 :
-                        year = "2016";
-                        if(!searched){
-                            new FetchTeamsTask().execute();
-                        }
-                        searched = false;
-                        break;
-                    case 2 :
-                        year = "2015";
-                        if(!searched){
-                            new FetchTeamsTask().execute();
-                        }
-                        searched = false;
-                        break;
-                    case 3 :
-                        year = "2014";
-                        if(!searched){
-                            new FetchTeamsTask().execute();
-                        }
-                        searched = false;
-                        break;
-                    case 4 :
-                        year = "2013";
-                        if(!searched){
-                            new FetchTeamsTask().execute();
-                        }
-                        searched = false;
-                        break;
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -170,63 +97,20 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
         TeamListFragment.teamList = homeTeamData;
         mSectionsPagerAdapter = new TeamListFragment.SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        searched = false;
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         TeamListFragment.teamList = homeTeamData;
-
         mSectionsPagerAdapter = new TeamListFragment.SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        searched = false;
         finish();
-
         return true;
-    }
-    private static class MyAdapter extends ArrayAdapter<String> implements ThemedSpinnerAdapter {
-        private final ThemedSpinnerAdapter.Helper mDropDownHelper;
-
-        public MyAdapter(Context context, String[] objects) {
-            super(context, android.R.layout.simple_list_item_1, objects);
-            mDropDownHelper = new ThemedSpinnerAdapter.Helper(context);
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            View view;
-
-            if (convertView == null) {
-                // Inflate the drop down using the helper's LayoutInflater
-                LayoutInflater inflater = mDropDownHelper.getDropDownViewInflater();
-                view = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-            } else {
-                view = convertView;
-            }
-
-            TextView textView = (TextView) view.findViewById(android.R.id.text1);
-            textView.setText(getItem(position));
-
-
-            return view;
-        }
-
-        @Override
-        public Resources.Theme getDropDownViewTheme() {
-            return mDropDownHelper.getDropDownViewTheme();
-        }
-
-        @Override
-        public void setDropDownViewTheme(Resources.Theme theme) {
-            mDropDownHelper.setDropDownViewTheme(theme);
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.search, menu);
-        // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
@@ -246,6 +130,7 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
@@ -276,16 +161,15 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
                     Toast.makeText(this,"Search not found",Toast.LENGTH_LONG).show();
                 }
 
-
                 mSectionsPagerAdapter = new TeamListFragment.SectionsPagerAdapter(getSupportFragmentManager());
                 mViewPager.setAdapter(mSectionsPagerAdapter);
-                searched = true;
+
             }
+
         else if(homeTeamData != null){
             TeamListFragment.teamList = homeTeamData;
             mSectionsPagerAdapter = new TeamListFragment.SectionsPagerAdapter(getSupportFragmentManager());
             mViewPager.setAdapter(mSectionsPagerAdapter);
-            searched = true;
         }
 
     }
@@ -303,6 +187,7 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
         return false;
     }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
     public class FetchTeamsTask extends AsyncTask<Boolean, Void, List<List<Team>>> {
 
         @Override
@@ -321,11 +206,9 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
 
             URL teamListRequestUrl1 = NetworkUtils.buildTeamListUrl(true, year);
             URL teamListRequestUrl2 = NetworkUtils.buildTeamListUrl(false, year);
-//            URL gameListRequestUrl1 = NetworkUtils.buildGameListUrl(true,"01",year);
-//            URL gameListRequestUrl2 = NetworkUtils.buildGameListUrl(false,"01",year);
 
             try {
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
                 String jsonTeamListResponse = NetworkUtils
                         .getResponseFromHttpUrl(teamListRequestUrl1);
 
@@ -339,25 +222,16 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
 
                 teams = JsonUtils
                         .getTeamsFromJson(BasketballLeagueHomeActivity.this, jsonTeamListResponse);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 wholeLeagueOfYear.add(teams);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                String jsonGameListResponse = NetworkUtils
-//                        .getResponseFromHttpUrl(gameListRequestUrl1);
 
                 List<Game> games = JsonUtils
                         .getGamesFromJson(BasketballLeagueHomeActivity.this,true,12,year);
 
                 wholeGamesOfYear.add(games);
 
-//                jsonGameListResponse = NetworkUtils
-//                        .getResponseFromHttpUrl(gameListRequestUrl2);
-
                 games = JsonUtils
                         .getGamesFromJson(BasketballLeagueHomeActivity.this, false,12,year);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 wholeGamesOfYear.add(games);
 
@@ -375,8 +249,6 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
                 Collections.reverse(wholeLeagueOfYear.get(0));
                 Collections.sort(wholeLeagueOfYear.get(1));
                 Collections.reverse(wholeLeagueOfYear.get(1));
-
-
                 return wholeLeagueOfYear;
 
             } catch (Exception e) {
@@ -385,17 +257,113 @@ public class BasketballLeagueHomeActivity extends AppCompatActivity {
             }
         }
 
-        @Override
+    @Override
         protected void onPostExecute(List<List<Team>> teamData) {
             homeTeamData = teamData;
             teamList = homeTeamData;
             mSectionsPagerAdapter = new TeamListFragment.SectionsPagerAdapter(getSupportFragmentManager());
             mViewPager.setAdapter(mSectionsPagerAdapter);
             setProgressVisiblity();
-
         }
 
 
     }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    class MySpinnerAdapter implements AdapterView.OnItemSelectedListener{
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            switch(position){
+                case 0 :
+                    year = "2017";
+                    new FetchTeamsTask().execute();
+                    break;
+                case 1 :
+                    year = "2016";
+                    new FetchTeamsTask().execute();
+                    break;
+                case 2 :
+                    year = "2015";
+                    new FetchTeamsTask().execute();
+                    break;
+                case 3 :
+                    year = "2014";
+                    new FetchTeamsTask().execute();
+                    break;
+                case 4 :
+                    year = "2013";
+                    new FetchTeamsTask().execute();
+                    break;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
     }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    class MyTabAdapter implements TabLayout.OnTabSelectedListener{
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            mViewPager.setCurrentItem(tab.getPosition());
+            if (tab.equals(tabLayout.getTabAt(0))) {
+                TeamListFragment.rowNumber = 1;
+            } else {
+                TeamListFragment.rowNumber = 2;
+            }
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+
+        }
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    private static class MyAdapter extends ArrayAdapter<String> implements ThemedSpinnerAdapter {
+        private final ThemedSpinnerAdapter.Helper mDropDownHelper;
+
+        public MyAdapter(Context context, String[] objects) {
+            super(context, android.R.layout.simple_list_item_1, objects);
+            mDropDownHelper = new ThemedSpinnerAdapter.Helper(context);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            View view;
+
+            if (convertView == null) {
+                LayoutInflater inflater = mDropDownHelper.getDropDownViewInflater();
+                view = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+            } else {
+                view = convertView;
+            }
+
+            TextView textView = view.findViewById(android.R.id.text1);
+            textView.setText(getItem(position));
+
+            return view;
+        }
+
+        @Override
+        public Resources.Theme getDropDownViewTheme() {
+            return mDropDownHelper.getDropDownViewTheme();
+        }
+
+        @Override
+        public void setDropDownViewTheme(Resources.Theme theme) {
+            mDropDownHelper.setDropDownViewTheme(theme);
+        }
+    }
+
+    }
+
+
+
 

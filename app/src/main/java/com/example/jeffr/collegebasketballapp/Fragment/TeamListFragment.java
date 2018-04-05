@@ -33,10 +33,8 @@ import java.util.List;
 
 public class TeamListFragment extends Fragment implements RecyclerViewOnClick {
 
-    private static final String TAG = TeamListFragment.class.getSimpleName();
     public  RecyclerView r;
     public  static List<List<Team>> teamList = new ArrayList<>();
-    private static List<TeamListFragment> fragments = new ArrayList<>();
     private  static final String ARG_SECTION_NUMBER = "section_number";
     public static int rowNumber = 1;
     public static int listIndex = 0;
@@ -54,18 +52,13 @@ public class TeamListFragment extends Fragment implements RecyclerViewOnClick {
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         male = false;
-        fragments.add(fragment);
         return fragment;
     }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_basketbball_league_home, container, false);
-
         final FragmentActivity fragmentActivity = getActivity();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity);
         r = rootView.findViewById(R.id.teams_recyclerview);
@@ -73,9 +66,6 @@ public class TeamListFragment extends Fragment implements RecyclerViewOnClick {
         r.setItemAnimator(new DefaultItemAnimator());
         teamRecyclerView = new TeamRecyclerView(teamList.get(listIndex++%2),TeamListFragment.this);
         r.setAdapter(teamRecyclerView);
-        //#6A1B9A
-
-
         return rootView;
     }
 
@@ -83,23 +73,17 @@ public class TeamListFragment extends Fragment implements RecyclerViewOnClick {
     public void rowSelected(int row) {
         if(rowNumber == 1 ){
             TeamProfileActivity.team = teamList.get(0).get(row);
-            Log.d(TAG, "Went to row" + getArguments().getInt(ARG_SECTION_NUMBER));
             Intent intent = new Intent(getActivity(),TeamProfileActivity.class);
             intent.putExtra("Male",true);
             startActivity(intent);
         }
         else if(rowNumber == 2 ){
             TeamProfileActivity.team = teamList.get(1).get(row);
-            Log.d(TAG, "Went to row" + getArguments().getInt(ARG_SECTION_NUMBER));
             Intent intent = new Intent(getActivity(),TeamProfileActivity.class);
             intent.putExtra("Male",false);
             startActivity(intent);
         }
-
-
     }
-
-
 
     public static class SectionsPagerAdapter extends FragmentPagerAdapter {
 

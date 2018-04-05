@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        getWindow().setStatusBarColor(BLACK);
     }
 
 }

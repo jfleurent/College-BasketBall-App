@@ -44,8 +44,7 @@ import java.util.List;
 public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
     private PieChart pieChart;
     private RecyclerView recyclerView;
-   private RecyclerView recyclerView2;
-    private PlayerRecyclerView playerRecyclerView;
+    private RecyclerView recyclerView2;
     List<Player> playerList;
     private TextView teamTitle;
     private TextView leagueGender;
@@ -54,16 +53,17 @@ public class TeamInfoFragment extends Fragment implements RecyclerViewOnClick {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_team_info, container, false);
 
-String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men" : "Women";
+        String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men" : "Women";
+
         pieChart = rootView.findViewById(R.id.team_wins_piechart);
         recyclerView = rootView.findViewById(R.id.team_players_recyclerview);
-       recyclerView2 = rootView.findViewById(R.id.team_games_recyclerview);
+        recyclerView2 = rootView.findViewById(R.id.team_games_recyclerview);
         teamTitle = rootView.findViewById(R.id.team_name_textview);
         leagueGender = rootView.findViewById(R.id.gender_league_textview);
         teamRegion = rootView.findViewById(R.id.team_region_textview);
-
 
         final FragmentActivity fragmentActivity = getActivity();
 
@@ -78,8 +78,6 @@ String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men"
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView2.setLayoutManager(linearLayoutManager2);
         recyclerView2.setItemAnimator(new DefaultItemAnimator());
-
-
 
         float teamWinRatio[] = {TeamProfileActivity.team.getWin(),TeamProfileActivity.team.getLoss()};
         String[] winText = {"Win","Loss"};
@@ -98,7 +96,6 @@ String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men"
 
     @Override
     public void rowSelected(int row) {
-        //TODO Change to bundle usage
         PlayerProfileActivity.playerId = playerList.get(row).getId();
       Intent intent = new Intent(getActivity(),PlayerProfileActivity.class);
       intent.putExtra("Male",getActivity().getIntent().getExtras().getBoolean("Male"));
@@ -109,6 +106,7 @@ String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men"
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
         ArrayList<String> xEntrys = new ArrayList<>();
         String[] winloss = {"\nWin","\nLoss"};
+
         for(int i = 0; i < yData.length; i++){
             yEntrys.add(new PieEntry(yData[i] ,winloss[i]));
         }
@@ -120,7 +118,6 @@ String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men"
         PieDataSet pieDataSet = new PieDataSet(yEntrys, "");
         pieDataSet.setValueTextSize(15);
 
-        
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(Color.GREEN);
         colors.add(Color.RED);
@@ -158,11 +155,8 @@ String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men"
             try {
                 String jsonPlayerListResponse = NetworkUtils
                         .getResponseFromHttpUrl(playerListRequestUrl1);
-
                 List<Player> players = JsonUtils
                         .getPlayersFromJson(getActivity(), jsonPlayerListResponse);
-
-
                 return players;
 
             } catch (Exception e) {
@@ -170,14 +164,15 @@ String gender = getActivity().getIntent().getExtras().getBoolean("Male") ? "Men"
                 return null;
             }
         }
+
         @Override
         protected void onPostExecute(List<Player> playersData) {
             playerList = playersData;
             recyclerView.setAdapter(new PlayerRecyclerView(playersData,TeamInfoFragment.this));
-
             recyclerView2.setAdapter(new GameRecyclerView(TeamProfileActivity.team.getTeamGames(),TeamInfoFragment.this));
         }
     }
+
     public static class PagerAdapter extends FragmentPagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {

@@ -40,7 +40,6 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
         int layoutIdForListItem = R.layout.player_info_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
-
         View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
         return new PlayerRecyclerViewHolder(view);
     }
@@ -54,7 +53,6 @@ public class PlayerRecyclerView extends RecyclerView.Adapter<PlayerRecyclerView.
         holder.playerLastName.setText("Last Name: "+playerList.get(position).getLastName());
         holder.playerFirstName.setText("First Name: "+playerList.get(position).getFirstName());
         holder.playerExperience.setText(playerList.get(position).getExperience());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

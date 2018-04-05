@@ -44,7 +44,6 @@ public class GameRecyclerView extends RecyclerView.Adapter<GameRecyclerView.Game
         holder.homeName.setText(gameList.get(position).getHomeName());
         holder.awayScore.setText(String.valueOf(gameList.get(position).getAwayScore()));
         holder.awayName.setText(gameList.get(position).getAwayName());
-        
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

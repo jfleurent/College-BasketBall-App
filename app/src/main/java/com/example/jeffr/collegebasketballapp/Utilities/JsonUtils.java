@@ -101,9 +101,11 @@ public final class JsonUtils {
                 try{
                     homeScore = game.getInt("home_points");
                 }
+
                 catch (Exception e){
 
                 }
+
                 try{
                     awayScore = game.getInt("away_points");
                 }
@@ -111,17 +113,12 @@ public final class JsonUtils {
 
                 }
 
-
                 parsedGameListData.add(new Game(homeId,homeName,awayName,homeScore,awayScore));
             }
         }
-
-
-
         return parsedGameListData;
     }
 
-    //TODO might need year for this method with players playing in different seasons
     public static Player getPlayerFromJson(Context context, String teamJsonStr, int year, String teamId)
             throws JSONException {
 
@@ -147,11 +144,13 @@ public final class JsonUtils {
                         } catch (Exception e) {
                             number = "N/A";
                         }
-                            try {
-                                weight = String.valueOf(playerJson.getInt("weight"));
-                            } catch (Exception e2) {
-                                weight = "N/A";
-                            }
+
+                        try {
+                            weight = String.valueOf(playerJson.getInt("weight"));
+                        }
+                        catch (Exception e2) {
+                            weight = "N/A";
+                        }
                             parsedPlayerData = new Player(total.getInt("games_started"),
                                     total.getInt("games_played") - total.getInt("games_started"),
                                     playerJson.getString("first_name"), playerJson.getString("last_name"),
@@ -173,15 +172,12 @@ public final class JsonUtils {
                                     String.valueOf(average.getDouble("turnovers")), String.valueOf(total.getInt("two_points_att")),
                                     String.valueOf(total.getDouble("two_points_pct")), String.valueOf(average.getDouble("two_points_att")),
                                     String.valueOf(total.getInt("two_points_made")), String.valueOf(average.getDouble("two_points_made")));
-
                         }
 
                     }
                 }
 
             }
-
-
         return parsedPlayerData;
     }
 

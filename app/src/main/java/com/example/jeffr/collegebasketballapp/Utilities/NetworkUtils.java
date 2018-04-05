@@ -35,7 +35,7 @@ public final class NetworkUtils {
 
     public static URL buildPlayerUrl(boolean male, String player_id) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
+        apiKey = male ? "dsz6v6zq4n6h96sarcfpr5tt" : "pu277uqj6ne5wvjp5m7b9kpt";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel +"/"+version + "/" + languageCode + "/players/" +
                 player_id +"/profile." + format +"?api_key="+apiKey;
 
@@ -53,7 +53,7 @@ public final class NetworkUtils {
 
     public static URL buildTeamUrl(boolean male, String team_id) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
+        apiKey = male ? "dsz6v6zq4n6h96sarcfpr5tt" : "pu277uqj6ne5wvjp5m7b9kpt";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel + "/"+version + "/" + languageCode + "/teams/" +
                 team_id +"/profile." + format +"?api_key="+apiKey;
 
@@ -71,7 +71,7 @@ public final class NetworkUtils {
 
     public static URL buildTeamListUrl(boolean male,String year) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
+        apiKey = male ? "dsz6v6zq4n6h96sarcfpr5tt" : "pu277uqj6ne5wvjp5m7b9kpt";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel + "/"+version + "/" + languageCode + "/seasons/" +
                 year + "/REG/standings." + format +"?api_key="+apiKey;
 
@@ -89,7 +89,7 @@ public final class NetworkUtils {
 
     public static URL buildPlayerListUrl(boolean male,String teamId) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
+        apiKey = male ? "dsz6v6zq4n6h96sarcfpr5tt" : "pu277uqj6ne5wvjp5m7b9kpt";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel + "/"+version + "/" + languageCode + "/teams/" +
                 teamId + "/profile." + format +"?api_key="+apiKey;
 
@@ -109,7 +109,7 @@ public final class NetworkUtils {
     schedule.{format}?api_key={your_api_key}*/
     public static URL buildGameListUrl(boolean male,int day,String year) {
         TEAM_DATA_BASE_URL = male ? DYNAMIC_NCAAMB_URL : DYNAMIC_NCAAWB_URL;
-        apiKey = male ? "h4wyrrdbu69ewz97crfanvnv" : "qe3qq5pdjksq32d8q8uy7yxe";
+        apiKey = male ? "dsz6v6zq4n6h96sarcfpr5tt" : "pu277uqj6ne5wvjp5m7b9kpt";
         String query = TEAM_DATA_BASE_URL + "/"+ accessLevel + "/"+version + "/" + languageCode + "/games/" +year+"/12/"+
                 day + "/schedule." + format +"?api_key="+apiKey;
 

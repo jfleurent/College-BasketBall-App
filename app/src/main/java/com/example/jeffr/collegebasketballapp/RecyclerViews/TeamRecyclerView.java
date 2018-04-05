@@ -39,7 +39,6 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
         int layoutIdForListItem = R.layout.team_info_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
-
         View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
         return new TeamRecyclerView.TeamRecyclerViewHolder(view);
     }
@@ -51,7 +50,6 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
         holder.teamCity.setText(teamList.get(position).getCity());
         holder.teamName.setText(teamList.get(position).getName());
         addDataSet(winRatio,winText,holder.winChance);
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +79,6 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
         PieDataSet pieDataSet = new PieDataSet(yEntrys, "Win/Loss");
         pieDataSet.setValueTextSize(0);
 
-
         ArrayList<Integer> colors = new ArrayList<>();
         colors.add(Color.GREEN);
         colors.add(Color.RED);
@@ -96,12 +93,8 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
         Legend legend = pieChart.getLegend();
         legend.setEnabled(false);
 
-
         Description description = pieChart.getDescription();
         description.setText("");
-
-
-
 
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
@@ -109,7 +102,6 @@ public class TeamRecyclerView extends RecyclerView.Adapter<TeamRecyclerView.Team
         pieChart.setCenterText("Win/Loss");
         pieChart.setCenterTextSize(10);
         pieChart.setTouchEnabled(false);
-
     }
 
     public class TeamRecyclerViewHolder extends RecyclerView.ViewHolder {
